@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface StudentDAO {
     public Student login(String username, String password);
-    void AddStudent(Student student);
-    void DeleteStudent(int id);
-    List<Student> getAllStudents();
-    Student getStudentById(int id);
-    void UpdatePassword(int id, String newPassword);
+    public int AddStudent(Student student);
+    public int DeleteStudent(int id);
+    public List<Student> getAllStudents();
+    public Student getStudentById(int id);
+    public void UpdatePassword(int id, String newPassword);
 }

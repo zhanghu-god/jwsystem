@@ -56,14 +56,17 @@ public class TeacherDAOimpl implements TeacherDAO {
     }
 
     @Override
-    public void AddTeacher(Teacher teacher) {
+    public int AddTeacher(Teacher teacher) {
         Connection conn = dbUtil.getconn();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int conduct = 0;
         try {
             String sql_find = "SELECT * FROM teacher WHERE userID = ?";
             Object[] params_find = new Object[]{teacher.getId()};
-            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            preparedStatement = conn.prepareStatement(sql_find);
             dbUtil.setParam(preparedStatement, params_find);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 // 用户已存在
                 throw new ResultException("User already exists");
@@ -71,28 +74,29 @@ public class TeacherDAOimpl implements TeacherDAO {
                 String sql = "INSERT INTO teacher (userID, userName, password) VALUES (?, ?, ?)";
                 Object[]params = new Object[]{teacher.getId(), teacher.getUsername(), teacher.getPassword()};
                 dbUtil.update(sql, params);
+                conduct = 1;
             }
 
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            dbUtil.closeAll(resultSet, preparedStatement, conn);
+            return conduct;
         }
     }
 
     @Override
-    public void DeleteTeacher(int id) {
+    public int DeleteTeacher(int id) {
         Connection conn = dbUtil.getconn();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int conduct = 0;
         try {
             String sql_find = "SELECT * FROM teacher WHERE userID = ?";
             Object[] params_find = new Object[]{id};
-            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            preparedStatement = conn.prepareStatement(sql_find);
             dbUtil.setParam(preparedStatement, params_find);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) {
                 // 用户不存在
                 throw new ResultException("User not exists");
@@ -100,15 +104,13 @@ public class TeacherDAOimpl implements TeacherDAO {
                 String sql = "DELETE FROM teacher WHERE userID = ?";
                 Object[]params = new Object[]{id};
                 dbUtil.update(sql, params);
+                conduct = 1;
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+            DBUtil.closeAll(resultSet, preparedStatement, conn);
+            return conduct;
         }
     }
 
