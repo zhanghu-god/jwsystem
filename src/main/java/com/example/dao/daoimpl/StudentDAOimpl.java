@@ -37,7 +37,7 @@ public class StudentDAOimpl implements StudentDAO {
                 return new Student(userID,username,password);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class StudentDAOimpl implements StudentDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class StudentDAOimpl implements StudentDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -100,8 +100,9 @@ public class StudentDAOimpl implements StudentDAO {
                 return students;
             }
         } catch (SQLException | ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -122,8 +123,9 @@ public class StudentDAOimpl implements StudentDAO {
                 return student;
             }
         } catch (SQLException | ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -144,7 +146,7 @@ public class StudentDAOimpl implements StudentDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 }
