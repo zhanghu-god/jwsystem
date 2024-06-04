@@ -48,13 +48,13 @@ public class TeacherDAOimpl implements TeacherDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(resultSet.next()) {
                 // 用户已存在
-                throw new TeacherDAOimpl.ResultException("User already exists");
+                throw new ResultException("User already exists");
             } else {
                 String sql = "INSERT INTO teacher (userID, userName, password) VALUES (?, ?, ?)";
                 Object[]params = new Object[]{teacher.getId(), teacher.getUsername(), teacher.getPassword()};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
+        } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -67,13 +67,13 @@ public class TeacherDAOimpl implements TeacherDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(!resultSet.next()) {
                 // 用户不存在
-                throw new TeacherDAOimpl.ResultException("User not exists");
+                throw new ResultException("User not exists");
             } else {
                 String sql = "DELETE FROM teacher WHERE userID = ?";
                 Object[]params = new Object[]{id};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
+        } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -87,7 +87,7 @@ public class TeacherDAOimpl implements TeacherDAO {
             Object[] params = new Object[]{};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Teacher not found");
+                throw new ResultException("Teacher not found");
             } else {
                 do {
                     teacher.setUsername(resultSet.getString("userName"));
@@ -97,7 +97,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 } while(resultSet.next());
                 return teachers;
             }
-        } catch (SQLException | TeacherDAOimpl.ResultException e) {
+        } catch (SQLException | ResultException e) {
             System.out.println(e);
         }
         return null;
@@ -111,16 +111,16 @@ public class TeacherDAOimpl implements TeacherDAO {
             Object[] params = new Object[]{id};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Teacher not found");
+                throw new ResultException("Teacher not found");
             } else if (resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Duplicate teacher ID");
+                throw new ResultException("Duplicate teacher ID");
             } else {
                 teacher.setUsername(resultSet.getString("userName"));
                 teacher.setId(resultSet.getInt("userID"));
                 teacher.setPassword(resultSet.getString("password"));
                 return teacher;
             }
-        } catch (SQLException | TeacherDAOimpl.ResultException e) {
+        } catch (SQLException | ResultException e) {
             System.out.println(e);
         }
         return null;

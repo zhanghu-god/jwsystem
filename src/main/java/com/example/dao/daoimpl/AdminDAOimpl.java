@@ -54,7 +54,7 @@ public class AdminDAOimpl implements AdminDAO {
                 Object[]params = new Object[]{admin.getId(), admin.getUsername(), admin.getPassword()};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | AdminDAOimpl.ResultException | SQLException e) {
+        } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -73,7 +73,7 @@ public class AdminDAOimpl implements AdminDAO {
                 Object[]params = new Object[]{id};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | AdminDAOimpl.ResultException | SQLException e) {
+        } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         }
     }
@@ -97,7 +97,7 @@ public class AdminDAOimpl implements AdminDAO {
                 } while(resultSet.next());
                 return admins;
             }
-        } catch (SQLException | AdminDAOimpl.ResultException e) {
+        } catch (SQLException | ResultException e) {
             System.out.println(e);
         }
         return null;
@@ -120,7 +120,7 @@ public class AdminDAOimpl implements AdminDAO {
                 admin.setPassword(resultSet.getString("password"));
                 return admin;
             }
-        } catch (SQLException | AdminDAOimpl.ResultException e) {
+        } catch (SQLException | ResultException e) {
             System.out.println(e);
         }
         return null;
