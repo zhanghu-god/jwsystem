@@ -1,6 +1,7 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.StudentDAO;
+import com.example.entity.Admin;
 import com.example.entity.Student;
 import com.example.util.DBUtil;
 
@@ -22,6 +23,25 @@ public class StudentDAOimpl implements StudentDAO {
 
     public StudentDAOimpl() {
         this.dbUtil = new DBUtil();
+    }
+
+    @Override
+    public Student login(String username, String password) {
+        String sql="SELECT * FROM student WHERE userName=? AND password=?";
+        Object[]params={username,password};
+
+        ResultSet rs = DBUtil.executeQuery(sql, params);
+        try {
+            while(rs.next()){
+                //获取数据
+                int userID = rs.getInt("id");
+                //封装对象
+                return new Admin(userID,username,password);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override
@@ -84,6 +104,7 @@ public class StudentDAOimpl implements StudentDAO {
         } catch (SQLException | ResultException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     @Override
@@ -106,5 +127,6 @@ public class StudentDAOimpl implements StudentDAO {
         } catch (SQLException | ResultException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 }
