@@ -10,25 +10,24 @@ import java.sql.SQLException;
 public class CourseDAOimpl implements CourseDAO{
 
     @Override
-    public void addCourse(int courseId, String courseName, int teacherID, String courseTime, String classRoom) {
+    public void addCourse(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
         String sql = "insert into course values(?, ?, ?, ?, ?)";
-        Object[] params = {courseId, courseName, teacherID, courseTime, classRoom};
+        Object[] params = {courseID, courseName, teacherID, courseTime, classRoom};
         DBUtil.update(sql, params);
     }
 
     @Override
-    public void deleteCourse(int courseId){
-        String sql = "delete from course where courseId = ?";
-        Object[] params = {courseId};
+    public void deleteCourse(int courseID){
+        String sql = "delete from course where courseID = ?";
+        Object[] params = {courseID};
         DBUtil.update(sql, params);
     }
     @Override
-    public Course getCourseByID(int courseId){
-        String sql = "select * from course where courseId = ?";
-        Object[] params = {courseId};
-        Course course = new Course();
+    public Course getCourseByID(int courseID){
+        String sql = "select * from course where courseID = ?";
+        Object[] params = {courseID};
         ResultSet resultSet = DBUtil.executeQuery(sql, params);
-        course = Course.createCourse(resultSet);
+        Course course = Course.createCourse(resultSet);
         return course;
     }
     @Override
@@ -65,27 +64,27 @@ public class CourseDAOimpl implements CourseDAO{
         return courseList;
     }
     @Override
-    public void setCourseName(int courseId, String courseName){
-        String sql = "update course set courseName = ? where courseId = ?";
-        Object[] params = {courseName, courseId};
+    public void setCourseName(int courseID, String courseName){
+        String sql = "update course set courseName = ? where courseID = ?";
+        Object[] params = {courseName, courseID};
         DBUtil.update(sql, params);
     }
     @Override
-    public void setTeacherID(int courseId, int teacherID){
-        String sql = "update course set teacherID = ? where courseId = ?";
-        Object[] params = {teacherID, courseId};
+    public void setTeacherID(int courseID, int teacherID){
+        String sql = "update course set teacherID = ? where courseID = ?";
+        Object[] params = {teacherID, courseID};
         DBUtil.update(sql, params);
     }
     @Override
-    public void setCourseTime(int courseId, String courseTime){
-        String sql = "update course set courseTime = ? where courseId = ?";
-        Object[] params = {courseTime, courseId};
+    public void setCourseTime(int courseID, String courseTime){
+        String sql = "update course set courseTime = ? where courseID = ?";
+        Object[] params = {courseTime, courseID};
         DBUtil.update(sql, params);
     }
     @Override
-    public void setClassRoom(int courseId, String classRoom){
-        String sql = "update course set classRoom = ? where courseId = ?";
-        Object[] params = {classRoom, courseId};
+    public void setClassRoom(int courseID, String classRoom){
+        String sql = "update course set classRoom = ? where courseID = ?";
+        Object[] params = {classRoom, courseID};
         DBUtil.update(sql, params);
     }
 }
