@@ -35,7 +35,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 return new Teacher(userID,username,password);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -74,7 +74,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -98,8 +98,9 @@ public class TeacherDAOimpl implements TeacherDAO {
                 return teachers;
             }
         } catch (SQLException | TeacherDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -120,8 +121,9 @@ public class TeacherDAOimpl implements TeacherDAO {
                 return teacher;
             }
         } catch (SQLException | TeacherDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -142,7 +144,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 }
