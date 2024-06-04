@@ -1,6 +1,8 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.TeacherDAO;
+import com.example.entity.Admin;
+import com.example.entity.Student;
 import com.example.entity.Teacher;
 import com.example.entity.Teacher;
 import com.example.util.DBUtil;
@@ -20,6 +22,26 @@ public class TeacherDAOimpl implements TeacherDAO {
 
     public TeacherDAOimpl() {
         this.dbUtil = new DBUtil();
+    }
+
+    @Override
+    public Teacher login(String username, String password) {
+        String sql="SELECT * FROM teacher WHERE userName=? AND password=?";
+        Object[]params={username,password};
+
+        ResultSet rs = DBUtil.executeQuery(sql, params);
+        try {
+            while(rs.next()){
+                //获取数据
+                int userID = rs.getInt("id");
+                //封装对象
+                Teacher teacher = new Teacher(userID, username, password);
+                return teacher;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override
