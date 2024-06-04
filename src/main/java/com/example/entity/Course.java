@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Course {
-    int courseId;
+    int courseID;
     String courseName;
     int teacherID;
     String courseTime;
@@ -15,7 +15,7 @@ public class Course {
     public static Course createCourse(ResultSet resultSet){
         Course course = new Course();
         try {
-            course.setCourseId(resultSet.getInt("courseId"));
+            course.setCourseID(resultSet.getInt("courseID"));
             course.setCourseName(resultSet.getString("courseName"));
             course.setTeacherID(resultSet.getInt("teacherID"));
             course.setCourseTime(resultSet.getString("courseTime"));
@@ -27,20 +27,20 @@ public class Course {
         return course;
     }
 
-    public Course(int courseId, String courseName, int teacherID, String courseTime, String classRoom) {
-        this.courseId = courseId;
+    public Course(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
+        this.courseID = courseID;
         this.courseName = courseName;
         this.teacherID = teacherID;
         this.courseTime = courseTime;
         this.classRoom = classRoom;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getCourseID() {
+        return courseID;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 
     public String getCourseName() {
