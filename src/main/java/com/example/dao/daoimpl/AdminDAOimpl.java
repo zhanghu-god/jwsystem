@@ -35,7 +35,7 @@ public class AdminDAOimpl implements AdminDAO {
                 return new Admin(userID,username,password);
             }
         } catch (SQLException e) {
-                throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class AdminDAOimpl implements AdminDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | AdminDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -98,8 +98,9 @@ public class AdminDAOimpl implements AdminDAO {
                 return admins;
             }
         } catch (SQLException | AdminDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -120,8 +121,9 @@ public class AdminDAOimpl implements AdminDAO {
                 return admin;
             }
         } catch (SQLException | AdminDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -142,7 +144,7 @@ public class AdminDAOimpl implements AdminDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 }
