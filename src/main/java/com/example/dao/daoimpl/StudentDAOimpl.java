@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StudentDAOimpl implements StudentDAO {
     private DBUtil dbUtil;
-    private class ResultException extends Exception {
+    private static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -132,10 +132,13 @@ public class StudentDAOimpl implements StudentDAO {
             String sql_find = "SELECT * FROM student WHERE userID = ?";
             Object[] params_find = new Object[] {id} ;
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
-            if(!resultSet.next())
+            if(!resultSet.next()) {
                 // 用户不存在
-                throw new ResultException("User not exists");
-            else {
+                throw new ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new ResultException("Duplicate user ID");
+            } else {
                 String sql = "UPDATE student SET password = ? WHERE userID = ?";
                 Object[]params = new Object[]{newPassword, id};
                 dbUtil.update(sql, params);
