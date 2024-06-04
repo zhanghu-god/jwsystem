@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AdminDAOimpl implements AdminDAO {
     private DBUtil dbUtil;
-    private class ResultException extends Exception {
+    private static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -48,7 +48,7 @@ public class AdminDAOimpl implements AdminDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(resultSet.next()) {
                 // 用户已存在
-                throw new AdminDAOimpl.ResultException("User already exists");
+                throw new ResultException("User already exists");
             } else {
                 String sql = "INSERT INTO admin (userID, userName, password) VALUES (?, ?, ?)";
                 Object[]params = new Object[]{admin.getId(), admin.getUsername(), admin.getPassword()};
@@ -67,7 +67,7 @@ public class AdminDAOimpl implements AdminDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(!resultSet.next()) {
                 // 用户不存在
-                throw new AdminDAOimpl.ResultException("User not exists");
+                throw new ResultException("User not exists");
             } else {
                 String sql = "DELETE FROM admin WHERE userID = ?";
                 Object[]params = new Object[]{id};
@@ -87,7 +87,7 @@ public class AdminDAOimpl implements AdminDAO {
             Object[] params = new Object[]{};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Admin not found");
+                throw new ResultException("Admin not found");
             } else {
                 do {
                     admin.setUsername(resultSet.getString("userName"));
@@ -110,9 +110,9 @@ public class AdminDAOimpl implements AdminDAO {
             Object[] params = new Object[]{id};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Admin not found");
+                throw new ResultException("Admin not found");
             } else if (resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Duplicate admin ID");
+                throw new ResultException("Duplicate admin ID");
             } else {
                 admin.setUsername(resultSet.getString("userName"));
                 admin.setId(resultSet.getInt("userID"));
@@ -130,10 +130,13 @@ public class AdminDAOimpl implements AdminDAO {
             String sql_find = "SELECT * FROM admin WHERE userID = ?";
             Object[] params_find = new Object[] {id} ;
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
-            if(!resultSet.next())
+            if(!resultSet.next()) {
                 // 用户不存在
-                throw new ResultException("User not exists");
-            else {
+                throw new ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new ResultException("Duplicate user ID");
+            } else {
                 String sql = "UPDATE admin SET password = ? WHERE userID = ?";
                 Object[]params = new Object[]{newPassword, id};
                 dbUtil.update(sql, params);
