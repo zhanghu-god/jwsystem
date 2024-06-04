@@ -36,7 +36,7 @@ public class StudentDAOimpl implements StudentDAO {
                 //获取数据
                 int userID = rs.getInt("id");
                 //封装对象
-                return new Admin(userID,username,password);
+                return new Student(userID,username,password);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,7 +104,6 @@ public class StudentDAOimpl implements StudentDAO {
         } catch (SQLException | ResultException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
@@ -127,6 +126,5 @@ public class StudentDAOimpl implements StudentDAO {
         } catch (SQLException | ResultException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 }
