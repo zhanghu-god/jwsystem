@@ -1,40 +1,17 @@
 package com.example.entity;
 
-public class Teacher {
+import java.util.List;
+
+public class Teacher extends User{
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    private String name;
+    private String username;
     private String password;
-    public Teacher(int id, String name, String password) {
+
+    public Teacher(int id, String username, String password) {
+        super(id, username, password);
         // 默认构造函数
         this.id=id;
         this.password=password;
-        this.name=name;
+        this.username=username;
     }
-
-
 }
