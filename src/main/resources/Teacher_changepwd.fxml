@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.controller.Teacher_changepwdCon">
+    <children>
+        <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" />
+                <HBox prefHeight="71.0" prefWidth="600.0" spacing="33.0">
+                    <children>
+                        <Label text="原密码" />
+                        <PasswordField fx:id="oldpwd" />
+                    </children>
+                    <padding>
+                        <Insets left="180.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="70.0" prefWidth="600.0" spacing="33.0">
+                    <children>
+                        <Label text="新密码" />
+                        <PasswordField fx:id="newpwd" />
+                    </children>
+                    <padding>
+                        <Insets left="180.0" />
+                    </padding>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="110.0" prefHeight="71.0" prefWidth="600.0" spacing="30.0">
+                    <children>
+                        <Label text="请重新输入新密码" />
+                        <PasswordField fx:id="yesnewpwd" />
+                    </children>
+                    <padding>
+                        <Insets left="124.0" />
+                    </padding>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="210.0" prefHeight="54.0" prefWidth="600.0">
+                    <children>
+                        <Button fx:id="confirm" mnemonicParsing="false" onAction="#changepwd" text="确认修改" />
+                    </children>
+                    <padding>
+                        <Insets left="347.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

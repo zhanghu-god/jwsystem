@@ -12,7 +12,7 @@ public class DBUtil {
             throw new RuntimeException(e);
         }
     }
-    public static String URL="jdbc:mysql://localhost:3306/bs_xk?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai";
+    public static String URL="jdbc:mysql://localhost:3306/srsdata?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai";
     public static String USERNAME="root";
     public static String PASSWORD="ZLPzh123";
     //封装连接
@@ -44,10 +44,9 @@ public class DBUtil {
             closeAll(null,ps,conn);
         }
     }
-    public static ResultSet executeQuery(String sql,Object[] params) {
+    public static ResultSet executeQuery(String sql,Object... params) {
         Connection conn = getconn();
         PreparedStatement ps=null;
-        ResultSet resultSet = null;
 
         try {
             // 加载数据库驱动（如果需要）
@@ -59,15 +58,15 @@ public class DBUtil {
             setParam(ps,params);
 
             // 执行查询操作
-            resultSet = ps.executeQuery(sql);
+            return ps.executeQuery(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally {
             // 关闭资源
             closeAll(null,ps,conn);
         }
 
-        return resultSet;
+        return null;
     }
     //封装通用的设置参数的方法
     public static void setParam(PreparedStatement ps,Object... params){
