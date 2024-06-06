@@ -12,6 +12,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             super(message);
         }
     }
+
     public void addselectedcourse(int courseID,int studentID){
         String sql1 = "select * from selectedcourse where courseID = ? and studentID = ?";
         Object[] object1 = {courseID,studentID};
