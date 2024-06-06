@@ -1,20 +1,40 @@
 package com.example.util;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
+import java.util.Properties;
 
 public class DBUtil {
+    private static String URL;
+    private static String USERNAME;
+    private static String PASSWORD;
+    private static String DRIVER;
     //将加载区块的方法放在静态代码块中
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+            //创建Properties集合类。
+            Properties pro = new Properties();
+            //获取配置文件
+            ClassLoader classLoader = DBUtil.class.getClassLoader();
+            URL res = classLoader.getResource("jdbc.properties");
+            assert res != null;
+            String path = res.getPath();
+            //加载文件
+            pro.load(new FileReader(path));
+            //赋值
+            URL=pro.getProperty("url");
+            PASSWORD=pro.getProperty("password");
+            USERNAME=pro.getProperty("username");
+            DRIVER=pro.getProperty("driver");
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static String URL="jdbc:mysql://localhost:3306/srsdata?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai";
-    public static String USERNAME="root";
-    public static String PASSWORD="ZLPzh123";
     //封装连接
     public static Connection getconn(){
         Connection conn=null;
@@ -58,7 +78,7 @@ public class DBUtil {
             setParam(ps,params);
 
             // 执行查询操作
-            return ps.executeQuery(sql);
+            return ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

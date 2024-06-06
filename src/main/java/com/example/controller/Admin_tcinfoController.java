@@ -84,19 +84,11 @@ public class Admin_tcinfoController {
                 teacherList.add(teacher);
             }
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            DBUtil.closeAll(rs, stmt, conn);
         }
         //设置tableview的每一列
         tcid.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tcname.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tcname.setCellValueFactory(new PropertyValueFactory<>("username"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
 
         //将数据添加到tableview中

@@ -78,14 +78,15 @@ public class AdminDAOimpl implements AdminDAO {
         }
     }
 
-    @Override
     public List<Admin> getAllAdmins() {
         LinkedList<Admin> admins = new LinkedList<>();
         Admin admin = new Admin(10000, "name", "10000" );
         try {
             String sql = "SELECT * FROM admin";
-            Object[] params = new Object[]{};
-            ResultSet resultSet = dbUtil.executeQuery(sql, params);
+            ResultSet resultSet = dbUtil.executeQuery(sql);
+            if (resultSet == null) {
+                throw new ResultException("Error executing query");
+            }
             if (!resultSet.next()) {
                 throw new ResultException("Admin not found");
             } else {
