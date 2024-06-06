@@ -4,10 +4,16 @@ import com.example.dao.TeacherDAO;
 import com.example.entity.Teacher;
 import com.example.util.DBUtil;
 
+import javax.xml.transform.Result;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.example.util.DBUtil.getconn;
+import static com.example.util.DBUtil.setParam;
 
 public class TeacherDAOimpl implements TeacherDAO {
     private DBUtil dbUtil;
@@ -54,6 +60,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 Object[]params = new Object[]{teacher.getId(), teacher.getUsername(), teacher.getPassword()};
                 dbUtil.update(sql, params);
             }
+
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
         }
@@ -64,6 +71,7 @@ public class TeacherDAOimpl implements TeacherDAO {
         try {
             String sql_find = "SELECT * FROM teacher WHERE userID = ?";
             Object[] params_find = new Object[]{id};
+
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(!resultSet.next()) {
                 // 用户不存在
@@ -85,6 +93,7 @@ public class TeacherDAOimpl implements TeacherDAO {
         try {
             String sql = "SELECT * FROM teacher";
             Object[] params = new Object[]{};
+
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
                 throw new ResultException("Teacher not found");

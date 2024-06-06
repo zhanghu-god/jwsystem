@@ -51,11 +51,11 @@ public class DBUtil {
         Connection conn = getconn();
         PreparedStatement ps=null;
         try {
-            ps=conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             //调用通用的设置参数的方法 向sql语句中设置参数
             setParam(ps,params);
             //执行sql语句
-            int i=ps.executeUpdate();
+            int i = ps.executeUpdate();
             return i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -65,8 +65,10 @@ public class DBUtil {
         }
     }
     public static ResultSet executeQuery(String sql,Object... params) {
+
         Connection conn = getconn();
         PreparedStatement ps=null;
+        ResultSet rs=null;
 
         try {
             // 加载数据库驱动（如果需要）
@@ -78,15 +80,12 @@ public class DBUtil {
             setParam(ps,params);
 
             // 执行查询操作
-            return ps.executeQuery();
+            rs = ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            // 关闭资源
-            closeAll(null,ps,conn);
         }
 
-        return null;
+        return rs;
     }
     //封装通用的设置参数的方法
     public static void setParam(PreparedStatement ps,Object... params){
