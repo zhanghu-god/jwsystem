@@ -47,7 +47,7 @@ public class loginController {
 
     @FXML
     void confirm(ActionEvent event) {
-        if(adlog.isSelected()){
+        /*if(adlog.isSelected()){
             AdminDAO adminDAO=new AdminDAOimpl();
             List<Admin> admins= adminDAO.getAllAdmins();
             if (admins == null || admins.isEmpty()) {
@@ -121,7 +121,8 @@ public class loginController {
                     }
                 }
             }
-        }
+        }*/
+        loaderFXML("/Admin.fxml");
     }
     void loaderFXML(String fxmlfile){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlfile));
