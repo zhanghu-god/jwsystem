@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class AdminController {
     @FXML
@@ -37,17 +38,19 @@ public class AdminController {
 
     @FXML
     void showstuinfo(ActionEvent event) {
+        System.out.println(main.getScene().getWindow().getUserData());
+
         loadView("/Admin_stuinfo.fxml");
     }
 
     @FXML
     void showtcinfo(ActionEvent event) {
-        loadView("/Admin_tcinfo.fxml");
+        loadView("/Admin_couinfo.fxml");
     }
 
     private void loadView(String fxmlFile) {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlFile));
+            Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
             border.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();

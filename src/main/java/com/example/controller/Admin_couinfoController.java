@@ -17,34 +17,51 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.example.util.DBUtil.closeAll;
-import static com.example.util.DBUtil.executeQuery;
-
-public class Admin_tcinfoController {
+public class Admin_couinfoController {
     @FXML
-    private TextField inputid;
+    private Button addbtn;
 
     @FXML
-    private TextField inputname;
+    private TableColumn<?, ?> classroom;
+
     @FXML
-    private TableColumn<Teacher, String> password;
+    private TableColumn<?, ?> courseid;
+
+    @FXML
+    private TableColumn<?, ?> coursename;
+
+    @FXML
+    private Button delbtn;
+
+    @FXML
+    private TextField inputclassroom;
+
+    @FXML
+    private TextField inputcouid;
+
+    @FXML
+    private TextField inputcouname;
+
+    @FXML
+    private TextField inputtcid;
+
+    @FXML
+    private TextField inputtcname;
+
+    @FXML
+    private TextField inputtime;
+
+    @FXML
+    private Button refreshbtn;
+
+    @FXML
+    private TableColumn<?, ?> time;
 
     @FXML
     private TableView<Teacher> tableview;
 
     @FXML
     private TableColumn<Teacher, Integer> tcid;
-
-    @FXML
-    private TableColumn<Teacher, String> tcname;
-    @FXML
-    private Button addbtn;
-
-    @FXML
-    private Button delbtn;
-
-    @FXML
-    private Button refreshbtn;
 
     @FXML
     void add(ActionEvent event) {
@@ -68,7 +85,7 @@ public class Admin_tcinfoController {
         loadData();
     }
     public void loadData() throws SQLException {
-        String sql = "SELECT userid,username,password FROM teacher";
+        /*String sql = "SELECT userid,username,password FROM teacher";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -93,7 +110,7 @@ public class Admin_tcinfoController {
 
         //将数据添加到tableview中
 
-        tableview.setItems(teacherList);
+        tableview.setItems(teacherList);*/
 
     }
 }

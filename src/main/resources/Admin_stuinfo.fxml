@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Admin_stuinfoController">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -26,21 +25,21 @@
             </TableView>
          </center>
          <right>
-            <VBox prefHeight="400.0" prefWidth="226.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="400.0" prefWidth="250.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="35.0" prefWidth="179.0" text="           操作区">
+                  <Label prefHeight="35.0" prefWidth="179.0" text="              操作区">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Label text="添加学生：" />
-                  <HBox prefHeight="45.0" prefWidth="241.0" spacing="10.0">
+                  <HBox prefHeight="45.0" prefWidth="241.0" spacing="20.0">
                      <children>
                         <Label text="学号" />
                         <TextField fx:id="inputid" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="40.0" prefWidth="189.0" spacing="10.0">
+                  <HBox prefHeight="40.0" prefWidth="189.0" spacing="20.0">
                      <children>
                         <Label text="姓名" />
                         <TextField fx:id="inputname" />

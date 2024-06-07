@@ -47,7 +47,8 @@ public class loginController {
 
     @FXML
     void confirm(ActionEvent event) {
-        /*if(adlog.isSelected()){
+        boolean login = false;
+        if(adlog.isSelected()){
             AdminDAO adminDAO=new AdminDAOimpl();
             List<Admin> admins= adminDAO.getAllAdmins();
             if (admins == null || admins.isEmpty()) {
@@ -61,14 +62,19 @@ public class loginController {
             else {
                 for (Admin admin : admins) {
                     if (admin.getUsername().equals(username.getText()) && admin.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Admin.fxml");
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("登录失败");
-                        alert.setHeaderText(null);
-                        alert.setContentText("用户名或密码输入错误！");
-                        alert.showAndWait();
+                        login=true;
                     }
+                }
+                if(login){
+                    loaderFXML("/Admin.fxml");
+                }
+
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("登录失败");
+                    alert.setHeaderText(null);
+                    alert.setContentText("用户名或密码输入错误！");
+                    alert.showAndWait();
                 }
             }
         }
@@ -86,14 +92,19 @@ public class loginController {
             else {
                 for (Student student : students) {
                     if (student.getUsername().equals(username.getText()) && student.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Student.fxml");
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("登录失败");
-                        alert.setHeaderText(null);
-                        alert.setContentText("用户名或密码输入错误！");
-                        alert.showAndWait();
+                        login=true;
                     }
+                }
+                if(login){
+                    loaderFXML("/Student.fxml");
+                }
+
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("登录失败");
+                    alert.setHeaderText(null);
+                    alert.setContentText("用户名或密码输入错误！");
+                    alert.showAndWait();
                 }
             }
         }
@@ -111,24 +122,28 @@ public class loginController {
             else {
                 for (Teacher teacher : teachers) {
                     if (teacher.getUsername().equals(username.getText()) && teacher.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Teacher.fxml");
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("登录失败");
-                        alert.setHeaderText(null);
-                        alert.setContentText("用户名或密码输入错误！");
-                        alert.showAndWait();
+                        login=true;
                     }
                 }
+                if(login){
+                    loaderFXML("/Teacher.fxml");
+                }
+
+                else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("登录失败");
+                    alert.setHeaderText(null);
+                    alert.setContentText("用户名或密码输入错误！");
+                    alert.showAndWait();
+                }
             }
-        }*/
-        loaderFXML("/Admin.fxml");
+        }
     }
     void loaderFXML(String fxmlfile){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlfile));
 
         try {
-
+            String Username=username.getText();
             // 获取Admin.fxml文件的根节点
             Parent root = loader.load();
 
@@ -142,6 +157,9 @@ public class loginController {
             newStage.setScene(scene);
 
             Stage stage=(Stage)yes.getScene().getWindow();
+
+            newStage.setUserData(Username);
+
             stage.close();
 
             // 显示新的舞台
