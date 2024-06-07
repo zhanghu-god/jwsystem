@@ -4,8 +4,11 @@ import com.example.dao.StudentDAO;
 import com.example.entity.Student;
 import com.example.util.DBUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,9 +30,11 @@ public class StudentDAOimpl implements StudentDAO {
     public Student login(String username, String password) {
         String sql="SELECT * FROM student WHERE userName=? AND password=?";
         Object[]params={username,password};
-
-        ResultSet rs = DBUtil.executeQuery(sql, params);
+        Connection conn = dbUtil.getconn();
         try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            dbUtil.setParam(preparedStatement, params);
+            ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 //获取数据
                 int userID = rs.getInt("id");
@@ -38,16 +43,25 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+             try {
+                 conn.close();
+             } catch (SQLException e) {
+                 System.out.println(e);
+             }
         }
         return null;
     }
 
     @Override
     public void AddStudent(Student student) {
+        Connection  conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM student WHERE userID = ?";
             Object[] params_find = new Object[]{student.getId()};
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement, params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 // 用户已存在
                 throw new ResultException("User already exists");
@@ -58,15 +72,24 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+             try {
+                 conn.close();
+             } catch (SQLException e) {
+                 System.out.println(e);
+             }
         }
     }
 
     @Override
     public void DeleteStudent(int id) {
+        Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM student WHERE userID = ?";
             Object[] params_find = new Object[]{id};
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement, params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) {
                 // 用户不存在
                 throw new ResultException("User not exists");
@@ -77,21 +100,28 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+             try {
+                 conn.close();
+             } catch (SQLException e) {
+                 System.out.println(e);
+             }
         }
     }
 
     @Override
     public List<Student> getAllStudents() {
-        LinkedList<Student> students = new LinkedList<>();
-        Student student = new Student(10000, "name", "10000" );
+        ArrayList<Student> students = new ArrayList<>();
+        Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM student";
-            Object[] params = new Object[]{};
-            ResultSet resultSet = dbUtil.executeQuery(sql, params);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Student not found");
             } else {
                 do {
+                    Student student = new Student(10000, "name", "10000" );
                     student.setUsername(resultSet.getString("userName"));
                     student.setId(resultSet.getInt("userID"));
                     student.setPassword(resultSet.getString("password"));
@@ -101,6 +131,12 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch (SQLException | ResultException e) {
             System.out.println(e);
+        } finally {
+             try {
+                 conn.close();
+             } catch (SQLException e) {
+                 System.out.println(e);
+             }
         }
         return null;
     }
@@ -108,10 +144,13 @@ public class StudentDAOimpl implements StudentDAO {
     @Override
     public Student getStudentById(int id) {
         Student student = new Student(id, "name", "10000" );
+        Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM student WHERE userID = ?";
             Object[] params = new Object[]{id};
-            ResultSet resultSet = dbUtil.executeQuery(sql, params);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            dbUtil.setParam(preparedStatement, params);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Student not found");
             } else if (resultSet.next()) {
@@ -124,16 +163,25 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch (SQLException | ResultException e) {
             System.out.println(e);
+        } finally {
+             try {
+                 conn.close();
+             } catch (SQLException e) {
+                 System.out.println(e);
+             }
         }
         return null;
     }
 
     @Override
     public void UpdatePassword(int id, String newPassword) {
+        Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM student WHERE userID = ?";
             Object[] params_find = new Object[] {id} ;
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement, params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) {
                 // 用户不存在
                 throw new ResultException("User not found");
@@ -147,6 +195,12 @@ public class StudentDAOimpl implements StudentDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 }
