@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-import static de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.launch;
+//import static de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.launch;
 
 public class Apprun extends javafx.application.Application {
 
