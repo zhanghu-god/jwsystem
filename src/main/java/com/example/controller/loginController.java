@@ -61,7 +61,7 @@ public class loginController {
             else {
                 for (Admin admin : admins) {
                     if (admin.getUsername().equals(username.getText()) && admin.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Admin.fxml");
+                        loaderFXML("/Admin.fxml");
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("登录失败");
@@ -86,7 +86,7 @@ public class loginController {
             else {
                 for (Student student : students) {
                     if (student.getUsername().equals(username.getText()) && student.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Student.fxml");
+                        loaderFXML("/Student.fxml");
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("登录失败");
@@ -111,7 +111,7 @@ public class loginController {
             else {
                 for (Teacher teacher : teachers) {
                     if (teacher.getUsername().equals(username.getText()) && teacher.getPassword().equals(pwd.getText())) {
-                        loaderFXML("Teacher.fxml");
+                        loaderFXML("/Teacher.fxml");
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("登录失败");
