@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Teacher_courseinfoCon">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -50,7 +49,7 @@
                   <HBox layoutX="10.0" layoutY="40.0" prefHeight="30.0" prefWidth="198.0" spacing="9.0">
                      <children>
                         <Label text="上课时间" />
-                        <TextField fx:id="inputname" />
+                        <TextField fx:id="inputtime" />
                      </children>
                   </HBox>
                   <HBox layoutX="35.0" layoutY="129.0" prefHeight="30.0" prefWidth="198.0" spacing="10.0">

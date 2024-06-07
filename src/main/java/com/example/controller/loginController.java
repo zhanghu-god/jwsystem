@@ -128,7 +128,6 @@ public class loginController {
                 if(login){
                     loaderFXML("/Teacher.fxml");
                 }
-
                 else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("登录失败");

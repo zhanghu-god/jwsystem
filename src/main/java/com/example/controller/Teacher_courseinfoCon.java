@@ -30,6 +30,9 @@ public class Teacher_courseinfoCon {
     private TextField inputid;
 
     @FXML
+    private TextField inputtime;
+
+    @FXML
     private TextField inputname;
 
     @FXML
