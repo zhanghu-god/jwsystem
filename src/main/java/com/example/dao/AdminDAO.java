@@ -12,4 +12,5 @@ public interface AdminDAO {
     void DeleteAdmin(int id);
     List<Admin> getAllAdmins();
     Admin getAdminById(int id);
+    void UpdatePassword(int id, String newPassword);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AdminDAOimpl implements AdminDAO {
     private DBUtil dbUtil;
-    private class ResultException extends Exception {
+    private static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -35,7 +35,7 @@ public class AdminDAOimpl implements AdminDAO {
                 return new Admin(userID,username,password);
             }
         } catch (SQLException e) {
-                throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -48,14 +48,14 @@ public class AdminDAOimpl implements AdminDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(resultSet.next()) {
                 // 用户已存在
-                throw new AdminDAOimpl.ResultException("User already exists");
+                throw new ResultException("User already exists");
             } else {
                 String sql = "INSERT INTO admin (userID, userName, password) VALUES (?, ?, ?)";
                 Object[]params = new Object[]{admin.getId(), admin.getUsername(), admin.getPassword()};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | AdminDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -67,27 +67,28 @@ public class AdminDAOimpl implements AdminDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(!resultSet.next()) {
                 // 用户不存在
-                throw new AdminDAOimpl.ResultException("User not exists");
+                throw new ResultException("User not exists");
             } else {
                 String sql = "DELETE FROM admin WHERE userID = ?";
                 Object[]params = new Object[]{id};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | AdminDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 
-    @Override
     public List<Admin> getAllAdmins() {
         LinkedList<Admin> admins = new LinkedList<>();
         Admin admin = new Admin(10000, "name", "10000" );
         try {
             String sql = "SELECT * FROM admin";
-            Object[] params = new Object[]{};
-            ResultSet resultSet = dbUtil.executeQuery(sql, params);
+            ResultSet resultSet = dbUtil.executeQuery(sql);
+            if (resultSet == null) {
+                throw new ResultException("Error executing query");
+            }
             if (!resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Admin not found");
+                throw new ResultException("Admin not found");
             } else {
                 do {
                     admin.setUsername(resultSet.getString("userName"));
@@ -97,9 +98,10 @@ public class AdminDAOimpl implements AdminDAO {
                 } while(resultSet.next());
                 return admins;
             }
-        } catch (SQLException | AdminDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ResultException e) {
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -110,17 +112,40 @@ public class AdminDAOimpl implements AdminDAO {
             Object[] params = new Object[]{id};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Admin not found");
+                throw new ResultException("Admin not found");
             } else if (resultSet.next()) {
-                throw new AdminDAOimpl.ResultException("Duplicate admin ID");
+                throw new ResultException("Duplicate admin ID");
             } else {
                 admin.setUsername(resultSet.getString("userName"));
                 admin.setId(resultSet.getInt("userID"));
                 admin.setPassword(resultSet.getString("password"));
                 return admin;
             }
-        } catch (SQLException | AdminDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ResultException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public void UpdatePassword(int id, String newPassword) {
+        try {
+            String sql_find = "SELECT * FROM admin WHERE userID = ?";
+            Object[] params_find = new Object[] {id} ;
+            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            if(!resultSet.next()) {
+                // 用户不存在
+                throw new ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new ResultException("Duplicate user ID");
+            } else {
+                String sql = "UPDATE admin SET password = ? WHERE userID = ?";
+                Object[]params = new Object[]{newPassword, id};
+                dbUtil.update(sql, params);
+            }
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 }

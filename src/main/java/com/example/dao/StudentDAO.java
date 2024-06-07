@@ -10,4 +10,5 @@ public interface StudentDAO {
     void DeleteStudent(int id);
     List<Student> getAllStudents();
     Student getStudentById(int id);
+    void UpdatePassword(int id, String newPassword);
 }

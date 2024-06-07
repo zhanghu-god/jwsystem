@@ -1,11 +1,9 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.StudentDAO;
-import com.example.entity.Admin;
 import com.example.entity.Student;
 import com.example.util.DBUtil;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -15,7 +13,7 @@ import java.util.List;
 
 public class StudentDAOimpl implements StudentDAO {
     private DBUtil dbUtil;
-    private class ResultException extends Exception {
+    private static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -39,7 +37,7 @@ public class StudentDAOimpl implements StudentDAO {
                 return new Student(userID,username,password);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -59,7 +57,7 @@ public class StudentDAOimpl implements StudentDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -78,7 +76,7 @@ public class StudentDAOimpl implements StudentDAO {
                 dbUtil.update(sql, params);
             }
         } catch(RuntimeException | ResultException | SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -102,8 +100,9 @@ public class StudentDAOimpl implements StudentDAO {
                 return students;
             }
         } catch (SQLException | ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -124,7 +123,30 @@ public class StudentDAOimpl implements StudentDAO {
                 return student;
             }
         } catch (SQLException | ResultException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public void UpdatePassword(int id, String newPassword) {
+        try {
+            String sql_find = "SELECT * FROM student WHERE userID = ?";
+            Object[] params_find = new Object[] {id} ;
+            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            if(!resultSet.next()) {
+                // 用户不存在
+                throw new ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new ResultException("Duplicate user ID");
+            } else {
+                String sql = "UPDATE student SET password = ? WHERE userID = ?";
+                Object[]params = new Object[]{newPassword, id};
+                dbUtil.update(sql, params);
+            }
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 }

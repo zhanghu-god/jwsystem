@@ -1,16 +1,19 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.TeacherDAO;
-import com.example.entity.Admin;
-import com.example.entity.Student;
-import com.example.entity.Teacher;
 import com.example.entity.Teacher;
 import com.example.util.DBUtil;
 
+import javax.xml.transform.Result;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.example.util.DBUtil.getconn;
+import static com.example.util.DBUtil.setParam;
 
 public class TeacherDAOimpl implements TeacherDAO {
     private DBUtil dbUtil;
@@ -35,11 +38,10 @@ public class TeacherDAOimpl implements TeacherDAO {
                 //获取数据
                 int userID = rs.getInt("id");
                 //封装对象
-                Teacher teacher = new Teacher(userID, username, password);
-                return teacher;
+                return new Teacher(userID,username,password);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -52,14 +54,15 @@ public class TeacherDAOimpl implements TeacherDAO {
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(resultSet.next()) {
                 // 用户已存在
-                throw new TeacherDAOimpl.ResultException("User already exists");
+                throw new ResultException("User already exists");
             } else {
                 String sql = "INSERT INTO teacher (userID, userName, password) VALUES (?, ?, ?)";
                 Object[]params = new Object[]{teacher.getId(), teacher.getUsername(), teacher.getPassword()};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -68,17 +71,18 @@ public class TeacherDAOimpl implements TeacherDAO {
         try {
             String sql_find = "SELECT * FROM teacher WHERE userID = ?";
             Object[] params_find = new Object[]{id};
+
             ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
             if(!resultSet.next()) {
                 // 用户不存在
-                throw new TeacherDAOimpl.ResultException("User not exists");
+                throw new ResultException("User not exists");
             } else {
                 String sql = "DELETE FROM teacher WHERE userID = ?";
                 Object[]params = new Object[]{id};
                 dbUtil.update(sql, params);
             }
-        } catch(RuntimeException | TeacherDAOimpl.ResultException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -89,9 +93,10 @@ public class TeacherDAOimpl implements TeacherDAO {
         try {
             String sql = "SELECT * FROM teacher";
             Object[] params = new Object[]{};
+
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Teacher not found");
+                throw new ResultException("Teacher not found");
             } else {
                 do {
                     teacher.setUsername(resultSet.getString("userName"));
@@ -101,9 +106,10 @@ public class TeacherDAOimpl implements TeacherDAO {
                 } while(resultSet.next());
                 return teachers;
             }
-        } catch (SQLException | TeacherDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ResultException e) {
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -114,17 +120,40 @@ public class TeacherDAOimpl implements TeacherDAO {
             Object[] params = new Object[]{id};
             ResultSet resultSet = dbUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Teacher not found");
+                throw new ResultException("Teacher not found");
             } else if (resultSet.next()) {
-                throw new TeacherDAOimpl.ResultException("Duplicate teacher ID");
+                throw new ResultException("Duplicate teacher ID");
             } else {
                 teacher.setUsername(resultSet.getString("userName"));
                 teacher.setId(resultSet.getInt("userID"));
                 teacher.setPassword(resultSet.getString("password"));
                 return teacher;
             }
-        } catch (SQLException | TeacherDAOimpl.ResultException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ResultException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public void UpdatePassword(int id, String newPassword) {
+        try {
+            String sql_find = "SELECT * FROM teacher WHERE userID = ?";
+            Object[] params_find = new Object[] {id} ;
+            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            if(!resultSet.next()) {
+                // 用户不存在
+                throw new ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new ResultException("Duplicate user ID");
+            } else {
+                String sql = "UPDATE teacher SET password = ? WHERE userID = ?";
+                Object[]params = new Object[]{newPassword, id};
+                dbUtil.update(sql, params);
+            }
+        } catch(RuntimeException | ResultException | SQLException e) {
+            System.out.println(e);
         }
     }
 }
