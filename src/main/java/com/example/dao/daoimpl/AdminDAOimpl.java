@@ -4,8 +4,7 @@ import com.example.dao.AdminDAO;
 import com.example.entity.Admin;
 import com.example.util.DBUtil;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,9 +24,11 @@ public class AdminDAOimpl implements AdminDAO {
     public Admin login(String username, String password) {
         String sql="select * from admin where username=? and password=?";
         Object[]params={username,password};
-
-        ResultSet rs = DBUtil.executeQuery(sql, params);
+        Connection conn = dbUtil.getconn();
         try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            dbUtil.setParam(preparedStatement, params);
+            ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 //获取数据
                 int userID = rs.getInt("id");
@@ -36,16 +37,25 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
         return null;
     }
 
     @Override
     public void AddAdmin(Admin admin) {
+        Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM admin WHERE userID = ?";
             Object[] params_find = new Object[]{admin.getId()};
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement,params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 // 用户已存在
                 throw new ResultException("User already exists");
@@ -56,15 +66,24 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 
     @Override
     public void DeleteAdmin(int id) {
+        Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM admin WHERE userID = ?";
             Object[] params_find = new Object[]{id};
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement,params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) {
                 // 用户不存在
                 throw new ResultException("User not exists");
@@ -75,15 +94,23 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 
     public List<Admin> getAllAdmins() {
         LinkedList<Admin> admins = new LinkedList<>();
         Admin admin = new Admin(10000, "name", "10000" );
+        Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM admin";
-            ResultSet resultSet = dbUtil.executeQuery(sql);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet == null) {
                 throw new ResultException("Error executing query");
             }
@@ -100,6 +127,12 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch (SQLException | ResultException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
         return null;
     }
@@ -107,10 +140,13 @@ public class AdminDAOimpl implements AdminDAO {
     @Override
     public Admin getAdminById(int id) {
         Admin admin = new Admin(id, "name", "10000" );
+        Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM admin WHERE userID = ?";
             Object[] params = new Object[]{id};
-            ResultSet resultSet = dbUtil.executeQuery(sql, params);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            dbUtil.setParam(preparedStatement,params);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Admin not found");
             } else if (resultSet.next()) {
@@ -123,16 +159,25 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch (SQLException | ResultException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
         return null;
     }
 
     @Override
     public void UpdatePassword(int id, String newPassword) {
+        Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM admin WHERE userID = ?";
             Object[] params_find = new Object[] {id} ;
-            ResultSet resultSet = dbUtil.executeQuery(sql_find, params_find);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            dbUtil.setParam(preparedStatement,params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) {
                 // 用户不存在
                 throw new ResultException("User not found");
@@ -146,6 +191,12 @@ public class AdminDAOimpl implements AdminDAO {
             }
         } catch(RuntimeException | ResultException | SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 }
