@@ -114,7 +114,6 @@ public class TeacherDAOimpl implements TeacherDAO {
     @Override
     public List<Teacher> getAllTeachers() {
         LinkedList<Teacher> teachers = new LinkedList<>();
-        Teacher teacher = new Teacher(10000, "name", "10000" );
         Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM teacher";
@@ -124,6 +123,7 @@ public class TeacherDAOimpl implements TeacherDAO {
                 throw new ResultException("Teacher not found");
             } else {
                 do {
+                    Teacher teacher = new Teacher(10000, "name", "10000" );
                     teacher.setUsername(resultSet.getString("userName"));
                     teacher.setId(resultSet.getInt("userID"));
                     teacher.setPassword(resultSet.getString("password"));
