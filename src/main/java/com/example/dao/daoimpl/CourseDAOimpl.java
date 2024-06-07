@@ -3,6 +3,9 @@ package com.example.dao.daoimpl;
 import com.example.entity.Course;
 import com.example.dao.CourseDAO;
 import com.example.util.DBUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 import java.sql.SQLException;
@@ -16,10 +19,15 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public void addCourse(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
         String sql1 = "select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1, params1);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
         try {
-            if (resultSet1.next()) {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (rs1.next()) {
                 throw new ResultException("课程ID已存在");
             }else{
                 String sql = "insert into course values(?, ?, ?, ?, ?)";
@@ -29,16 +37,23 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }catch(SQLException | ResultException e){
             System.out.println(e.getMessage());
+        }finally {
+            DBUtil.closeAll(rs1, stmt, conn);
         }
     }
 
     @Override
     public void deleteCourse(int courseID){
         String sql1 = "select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet = DBUtil.executeQuery(sql1, params1);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
         try {
-            if (!resultSet.next()) {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()) {
                 throw new ResultException("课程不存在");
             }
             else {
@@ -50,18 +65,34 @@ public class CourseDAOimpl implements CourseDAO{
             }
         catch (SQLException | ResultException e){
             System.out.println(e.getMessage());
+        }finally {
+            DBUtil.closeAll(rs1, stmt, conn);
         }
     }
     @Override
     public Course getCourseByID(int courseID){
         String sql = "select * from course where courseID = ?";
-        Object[] params = {courseID};
-        ResultSet resultSet = DBUtil.executeQuery(sql, params);
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
         try {
-            if (!resultSet.next())
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()) {
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("课程不存在");
+            }
             else {
-                return Course.createCourse(resultSet);
+                Course course = new Course();
+                course.setCourseID(rs1.getInt("courseID"));
+                course.setCourseName(rs1.getString("courseName"));
+                course.setTeacherID(rs1.getInt("teacherID"));
+                course.setCourseTime(rs1.getString("courseTime"));
+                course.setClassRoom(rs1.getString("classRoom"));
+                DBUtil.closeAll(rs1, stmt, conn);
+                return course;
             }
         }
         catch (SQLException | ResultException e){
@@ -70,34 +101,32 @@ public class CourseDAOimpl implements CourseDAO{
         return null;
     }
     @Override
-    public Course getCourseByName(String courseName){
-        String sql = "select * from course where courseName = ?";
-        Object[] params = {courseName};
-        ResultSet resultSet = DBUtil.executeQuery(sql, params);
-        try{
-            if (!resultSet.next()){
-                throw new ResultException("课程不存在");
-            }
-            else{
-             return Course.createCourse(resultSet);
-            }
-        }
-        catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-    @Override
-    public Course getCourseByTeacherID(int teacherID){
+    public List<Course> getCourseByTeacherID(int teacherID){
         String sql = "select * from course where teacherID = ?";
-        Object[] params = {teacherID};
-        ResultSet resultSet = DBUtil.executeQuery(sql, params);
-        try{
-            if (!resultSet.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setObject(1, teacherID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
                 throw new ResultException("课程不存在");
             }
             else{
-            return Course.createCourse(resultSet);
+                List<Course> courseList = new ArrayList<>();
+                do{
+                    Course course = new Course();
+                    course.setCourseID(rs1.getInt("courseID"));
+                    course.setCourseName(rs1.getString("courseName"));
+                    course.setTeacherID(rs1.getInt("teacherID"));
+                    course.setCourseTime(rs1.getString("courseTime"));
+                    course.setClassRoom(rs1.getString("classRoom"));
+                    courseList.add(course);
+                }while (rs1.next());
+                DBUtil.closeAll(rs1, stmt, conn);
+                return courseList;
             }
         }
         catch (SQLException | ResultException e){
@@ -108,18 +137,29 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public List<Course> getAllCourses(){
         String sql = "select * from course";
-        Object[] params = {};
-        List<Course> courseList = new ArrayList<>();
-        try{
-            ResultSet resultSet = DBUtil.executeQuery(sql, params);
-            if(!resultSet.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql);
+            rs1 = stmt.executeQuery();
+            if(!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("没有课程");
             }
             else{
+                List<Course> courseList = new ArrayList<>();
                 do{
-                Course course = Course.createCourse(resultSet);
-                courseList.add(course);
-                }while (resultSet.next());
+                    Course course = new Course();
+                    course.setCourseID(rs1.getInt("courseID"));
+                    course.setCourseName(rs1.getString("courseName"));
+                    course.setTeacherID(rs1.getInt("teacherID"));
+                    course.setCourseTime(rs1.getString("courseTime"));
+                    course.setClassRoom(rs1.getString("classRoom"));
+                    courseList.add(course);
+                }while (rs1.next());
+                DBUtil.closeAll(rs1, stmt, conn);
                 return courseList;
             }
         }
@@ -131,25 +171,24 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public void setCourseName(int courseID, String courseName){
         String sql1 ="select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1, params1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("课程不存在");
             }
             else{
-                String sql2 = "select * from course where courseName = ?";
-                Object[] params2 = {courseName};
-                ResultSet resultSet2 = DBUtil.executeQuery(sql2, params2);
-                if (resultSet2.next()){
-                    throw new ResultException("课程已存在");
+                DBUtil.closeAll(rs1, stmt, conn);
+                String sql = "update course set courseName = ? where courseID = ?";
+                Object[] params = {courseName, courseID};
+                DBUtil.update(sql, params);
                 }
-                else{
-                    String sql = "update course set courseName = ? where courseID = ?";
-                    Object[] params = {courseName, courseID};
-                    DBUtil.update(sql, params);
-                }
-            }
         }
         catch (SQLException | ResultException e) {
             System.out.println(e.getMessage());
@@ -158,13 +197,20 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public void setTeacherID(int courseID, int teacherID){
         String sql1 = "select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1, params1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("课程不存在");
             }
             else{
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "update course set teacherID = ? where courseID = ?";
                 Object[] params = {teacherID, courseID};
                 DBUtil.update(sql, params);
@@ -177,13 +223,20 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public void setCourseTime(int courseID, String courseTime){
         String sql1 = "select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1, params1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("课程不存在");
             }
             else{
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "update course set courseTime = ? where courseID = ?";
                 Object[] params = {courseTime, courseID};
                 DBUtil.update(sql, params);
@@ -196,13 +249,20 @@ public class CourseDAOimpl implements CourseDAO{
     @Override
     public void setClassRoom(int courseID, String classRoom){
         String sql1 = "select * from course where courseID = ?";
-        Object[] params1 = {courseID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1, params1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("课程不存在");
             }
             else{
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "update course set classRoom = ? where courseID = ?";
                 Object[] params = {classRoom, courseID};
                 DBUtil.update(sql, params);

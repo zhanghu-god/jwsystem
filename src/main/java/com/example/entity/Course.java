@@ -12,20 +12,6 @@ public class Course {
     public Course(){
 
     }
-    public static Course createCourse(ResultSet resultSet){
-        Course course = new Course();
-        try {
-            course.setCourseID(resultSet.getInt("courseID"));
-            course.setCourseName(resultSet.getString("courseName"));
-            course.setTeacherID(resultSet.getInt("teacherID"));
-            course.setCourseTime(resultSet.getString("courseTime"));
-            course.setClassRoom(resultSet.getString("classRoom"));
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return course;
-    }
 
     public Course(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
         this.courseID = courseID;

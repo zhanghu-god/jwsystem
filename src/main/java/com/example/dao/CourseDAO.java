@@ -7,8 +7,7 @@ public interface CourseDAO {
     public void addCourse(int courseID, String courseName, int teacherID, String courseTime, String classRoom);
     public void deleteCourse(int courseID);
     public Course getCourseByID(int courseID);
-    public Course getCourseByName(String courseName);
-    public Course getCourseByTeacherID(int teacherID);
+    public List<Course> getCourseByTeacherID(int teacherID);
     public List<Course> getAllCourses();
     public void setCourseName(int courseID, String courseName);
     public void setTeacherID(int courseID, int teacherID);

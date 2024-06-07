@@ -1,5 +1,7 @@
 package com.example.dao.daoimpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 import com.example.entity.selectedcourse;
@@ -15,13 +17,21 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
 
     public void addselectedcourse(int courseID,int studentID){
         String sql1 = "select * from selectedcourse where courseID = ? and studentID = ?";
-        Object[] object1 = {courseID,studentID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1,object1);
-        try{
-            if (resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
+            rs1 = stmt.executeQuery();
+            if (rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("已经选过该课程");
             }
             else{
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "insert into selectedcourse values(?,?,?)";
                 Object[] object = {courseID,studentID,0};
                 DBUtil.update(sql,object);
@@ -34,13 +44,21 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
     @Override
     public void delete(int courseID,int studentID){
         String sql1 = "select * from selectedcourse where courseID = ? and studentID = ?";
-        Object[] object1 = {courseID,studentID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1,object1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("未选过该课程");
             }
             else{
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "delete from selectedcourse where courseID = ? and studentID = ?";
                 Object[] object = {courseID,studentID};
                 DBUtil.update(sql,object);
@@ -53,13 +71,20 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
     @Override
     public void  setMark(int courseID,int studentID,int mark){
         String sql1  = "select * from selectedcourse where courseID = ? and studentID = ?";
-        Object[] object1 = {courseID,studentID};
-        ResultSet resultSet1 = DBUtil.executeQuery(sql1,object1);
-        try{
-            if (!resultSet1.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
                 throw new ResultException("该学生未选过该课程");
         }
             else {
+                DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "update selectedcourse set mark = ? where courseID = ? and studentID = ?";
                 Object[] object = {mark, courseID, studentID};
                 DBUtil.update(sql, object);
@@ -72,21 +97,27 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
     @Override
     public List<selectedcourse>  getByCourseID(int courseID){
         String sql = "select * from selectedcourse where courseID = ?";
-        Object[] object = {courseID};
-        List<selectedcourse> list = new ArrayList<>();
-        try{
-        ResultSet resultSet = DBUtil.executeQuery(sql,object);
-        if (!resultSet.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+        if (!rs1.next()){
+            DBUtil.closeAll(rs1, stmt, conn);
             throw new ResultException("该课程未选过学生");
         }
         else {
+            List<selectedcourse> list = new ArrayList<>();
             do{
             selectedcourse selectedcourse = new selectedcourse();
-            selectedcourse.setCourseID(resultSet.getInt("courseID"));
-            selectedcourse.setStudentID(resultSet.getInt("studentID"));
-            selectedcourse.setMark(resultSet.getInt("mark"));
+            selectedcourse.setCourseID(rs1.getInt("courseID"));
+            selectedcourse.setStudentID(rs1.getInt("studentID"));
+            selectedcourse.setMark(rs1.getInt("mark"));
             list.add(selectedcourse);
-            }while (resultSet.next());
+            }while (rs1.next());
             return list;
         }
         }
@@ -98,22 +129,29 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
     @Override
     public List<selectedcourse> getByStudentID(int studentID){
         String sql = "select * from selectedcourse where studentID = ?";
-        Object[] object = {studentID};
-        List<selectedcourse> list = new ArrayList<>();
-        try{
-        ResultSet resultSet = DBUtil.executeQuery(sql,object);
-        if(!resultSet.next()){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setObject(1, studentID);
+            rs1 = stmt.executeQuery();
+            if(!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
             throw new ResultException("该学生未选过课程");
         }
         else{
+            List<selectedcourse> list = new ArrayList<>();
             do {
             selectedcourse selectedcourse = new selectedcourse();
-            selectedcourse.setCourseID(resultSet.getInt("courseID"));
-            selectedcourse.setStudentID(resultSet.getInt("studentID"));
-            selectedcourse.setMark(resultSet.getInt("mark"));
+            selectedcourse.setCourseID(rs1.getInt("courseID"));
+            selectedcourse.setStudentID(rs1.getInt("studentID"));
+            selectedcourse.setMark(rs1.getInt("mark"));
             list.add(selectedcourse);
-            }while (resultSet.next());
-        return list;
+            }while (rs1.next());
+            DBUtil.closeAll(rs1, stmt, conn);
+            return list;
         }
     }
         catch (SQLException | ResultException e){
