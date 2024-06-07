@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,8 +111,7 @@ public class StudentDAOimpl implements StudentDAO {
 
     @Override
     public List<Student> getAllStudents() {
-        LinkedList<Student> students = new LinkedList<>();
-        Student student = new Student(10000, "name", "10000" );
+        ArrayList<Student> students = new ArrayList<>();
         Connection conn = dbUtil.getconn();
         try {
             String sql = "SELECT * FROM student";
@@ -121,6 +121,7 @@ public class StudentDAOimpl implements StudentDAO {
                 throw new ResultException("Student not found");
             } else {
                 do {
+                    Student student = new Student(10000, "name", "10000" );
                     student.setUsername(resultSet.getString("userName"));
                     student.setId(resultSet.getInt("userID"));
                     student.setPassword(resultSet.getString("password"));
