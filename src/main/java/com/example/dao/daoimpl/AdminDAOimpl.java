@@ -22,7 +22,7 @@ public class AdminDAOimpl implements AdminDAO {
     
     @Override
     public Admin login(String username, String password) {
-        String sql="select * from admin where username=? and password=?";
+        String sql="SELECT * FROM admin WHERE username=? AND password=?";
         Object[]params={username,password};
         Connection conn = dbUtil.getconn();
         try {
