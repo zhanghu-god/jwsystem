@@ -15,11 +15,12 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
         }
     }
 
-    public void addselectedcourse(int courseID,int studentID){
+    public int addselectedcourse(int courseID,int studentID){
         String sql1 = "select * from selectedcourse where courseID = ? and studentID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -33,20 +34,24 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             else{
                 DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "insert into selectedcourse values(?,?,?)";
-                Object[] object = {courseID,studentID,0};
+                Object[] object = {courseID,studentID,null};
                 DBUtil.update(sql,object);
+                conduct = 1;
             }
         }
         catch (ResultException | SQLException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
     }
     @Override
-    public void delete(int courseID,int studentID){
+    public int delete(int courseID,int studentID){
         String sql1 = "select * from selectedcourse where courseID = ? and studentID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -62,18 +67,22 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
                 String sql = "delete from selectedcourse where courseID = ? and studentID = ?";
                 Object[] object = {courseID,studentID};
                 DBUtil.update(sql,object);
+                conduct = 1;
             }
         }
         catch (ResultException | SQLException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
     }
     @Override
-    public void  setMark(int courseID,int studentID,int mark){
+    public int  setMark(int courseID,int studentID,int mark){
         String sql1  = "select * from selectedcourse where courseID = ? and studentID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -88,11 +97,39 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
                 String sql = "update selectedcourse set mark = ? where courseID = ? and studentID = ?";
                 Object[] object = {mark, courseID, studentID};
                 DBUtil.update(sql, object);
+                conduct = 1;
             }
         }
         catch (ResultException | SQLException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
+    }
+    @Override
+    public Integer getMark(int courseID,int studentID){
+        String sql1  = "select * from selectedcourse where courseID = ? and studentID = ? and mark is not null";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        Integer mark;
+        try{
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
+                throw new ResultException("没有成绩");
+            }else{
+                mark = rs1.getInt("mark");
+                return mark;
+            }
+        }catch (ResultException | SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
     @Override
     public List<selectedcourse>  getByCourseID(int courseID){

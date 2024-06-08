@@ -17,11 +17,12 @@ public class CourseDAOimpl implements CourseDAO{
         }
     }
     @Override
-    public void addCourse(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
+    public int addCourse(int courseID, String courseName, int teacherID, String courseTime, String classRoom) {
         String sql1 = "select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -34,20 +35,23 @@ public class CourseDAOimpl implements CourseDAO{
                 Object[] params = {courseID, courseName, teacherID, courseTime, classRoom};
                 DBUtil.update(sql, params);
                 System.out.println("添加成功");
+                conduct = 1;
             }
         }catch(SQLException | ResultException e){
             System.out.println(e.getMessage());
         }finally {
             DBUtil.closeAll(rs1, stmt, conn);
+            return conduct;
         }
     }
 
     @Override
-    public void deleteCourse(int courseID){
+    public int deleteCourse(int courseID){
         String sql1 = "select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -61,12 +65,14 @@ public class CourseDAOimpl implements CourseDAO{
                 Object[] params = {courseID};
                 DBUtil.update(sql, params);
                 System.out.println("删除成功");
+                conduct = 1;
                 }
             }
         catch (SQLException | ResultException e){
             System.out.println(e.getMessage());
         }finally {
             DBUtil.closeAll(rs1, stmt, conn);
+            return conduct;
         }
     }
     @Override
@@ -169,11 +175,12 @@ public class CourseDAOimpl implements CourseDAO{
         return null;
     }
     @Override
-    public void setCourseName(int courseID, String courseName){
+    public int setCourseName(int courseID, String courseName){
         String sql1 ="select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -188,18 +195,22 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "update course set courseName = ? where courseID = ?";
                 Object[] params = {courseName, courseID};
                 DBUtil.update(sql, params);
+                conduct = 1;
                 }
         }
         catch (SQLException | ResultException e) {
             System.out.println(e.getMessage());
-            }
+            }finally {
+            return conduct;
+        }
         }
     @Override
-    public void setTeacherID(int courseID, int teacherID){
+    public int setTeacherID(int courseID, int teacherID){
         String sql1 = "select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -214,18 +225,22 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "update course set teacherID = ? where courseID = ?";
                 Object[] params = {teacherID, courseID};
                 DBUtil.update(sql, params);
+                conduct = 1;
             }
         }
         catch (SQLException | ResultException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
     }
     @Override
-    public void setCourseTime(int courseID, String courseTime){
+    public int setCourseTime(int courseID, String courseTime){
         String sql1 = "select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -240,18 +255,22 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "update course set courseTime = ? where courseID = ?";
                 Object[] params = {courseTime, courseID};
                 DBUtil.update(sql, params);
+                conduct = 1;
             }
         }
         catch (SQLException | ResultException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
     }
     @Override
-    public void setClassRoom(int courseID, String classRoom){
+    public int setClassRoom(int courseID, String classRoom){
         String sql1 = "select * from course where courseID = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs1 = null;
+        int conduct = 0;
         try {
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
@@ -266,10 +285,15 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "update course set classRoom = ? where courseID = ?";
                 Object[] params = {classRoom, courseID};
                 DBUtil.update(sql, params);
+                conduct = 1;
             }
         }
         catch (SQLException | ResultException e){
             System.out.println(e.getMessage());
+        }finally {
+            return conduct;
         }
     }
 }
+
+
