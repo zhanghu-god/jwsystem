@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Admin_mainController">
    <children>
-      <Label layoutX="231.0" layoutY="117.0" text="welcome" />
+      <ImageView fitHeight="505.0" fitWidth="831.0" layoutX="-2.0" layoutY="-14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-91.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-229.0" AnchorPane.topAnchor="-14.0">
+         <image>
+            <Image url="@image/abstract-1264071_1280.webp.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <Label layoutX="259.0" layoutY="185.0" prefHeight="84.0" prefWidth="154.0" text="welcome" textFill="#475b86">
+         <font>
+            <Font size="36.0" />
+         </font></Label>
    </children>
 </AnchorPane>

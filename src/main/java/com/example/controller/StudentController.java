@@ -24,6 +24,11 @@ public class StudentController {
 
     @FXML
     private JFXButton select;
+
+    public void initialize(){
+        // 设置默认显示的界面
+        loadView("/Student_main.fxml");
+    }
     @FXML
     void showmain(ActionEvent event) {
         loadView("/Student_main.fxml");

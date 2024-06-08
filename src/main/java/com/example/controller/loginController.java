@@ -152,8 +152,14 @@ public class loginController {
             // 创建新的舞台（Stage）
             Stage newStage = new Stage();
 
+            // 设置新的舞台的标题
+            newStage.setTitle("学生选课系统");
+
+            //设置舞台不可伸缩
+            newStage.setResizable(false);
+
             // 设置新的场景（Scene）
-            Scene scene = new Scene(root, 800, 600);
+            Scene scene = new Scene(root, 810, 500);
 
             // 设置新的舞台的场景
             newStage.setScene(scene);

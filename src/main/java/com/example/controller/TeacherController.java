@@ -25,6 +25,11 @@ public class TeacherController {
     @FXML
     private JFXButton stuinfo;
 
+    public void initialize(){
+        // 设置默认显示的界面
+        loadView("/Teacher_main.fxml");
+    }
+
     @FXML
     void showchangepwd(ActionEvent event) {
         loadView("/Teacher_changepwd.fxml");

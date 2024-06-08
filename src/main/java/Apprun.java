@@ -14,6 +14,8 @@ public class Apprun extends javafx.application.Application {
         //加载登录界面绝对路径
         Parent root=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Login.fxml")));
         stage.setTitle("登录界面");
+        //设置窗口不可伸缩
+        stage.setResizable(false);
         stage.setScene(new Scene(root, 522, 294));
         stage.show();
     }

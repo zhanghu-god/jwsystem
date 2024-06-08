@@ -26,6 +26,11 @@ public class AdminController {
     @FXML
     private JFXButton couinfo;
 
+    public void initialize(){
+        // 设置默认显示的界面
+        loadView("/Admin_main.fxml");
+    }
+
     @FXML
     void showchangepwd(ActionEvent event) {
         loadView("/Admin_changepwd.fxml");
