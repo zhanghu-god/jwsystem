@@ -23,11 +23,12 @@
                   <TableColumn fx:id="time" prefWidth="77.5" text="上课时间" />
                   <TableColumn fx:id="classroom" prefWidth="77.5" text="教室" />
                   <TableColumn fx:id="tcid" prefWidth="77.5" text="教师工号" />
+                  <TableColumn fx:id="tcname" prefWidth="77.5" text="教师" />
               </columns>
             </TableView>
          </center>
          <right>
-            <VBox prefHeight="400.0" prefWidth="245.0" spacing="8.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="400.0" prefWidth="245.0" spacing="6.0" BorderPane.alignment="CENTER">
                <children>
                   <Label prefHeight="35.0" prefWidth="179.0" text="              操作区">
                      <font>
@@ -35,34 +36,40 @@
                      </font>
                   </Label>
                   <Label prefHeight="15.0" prefWidth="69.0" text="添加课程：" />
-                  <HBox prefHeight="45.0" prefWidth="241.0" spacing="12.0">
+                  <HBox prefHeight="34.0" prefWidth="235.0" spacing="12.0">
                      <children>
                         <Label text="课程编号" />
                         <TextField fx:id="inputcouid" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="201.0" spacing="12.0">
+                  <HBox prefHeight="34.0" prefWidth="235.0" spacing="12.0">
                      <children>
                         <Label text="课程名：" />
                         <TextField fx:id="inputcouname" />
                      </children>
                   </HBox>
-                  <HBox layoutX="35.0" layoutY="120.0" prefHeight="23.0" prefWidth="230.0">
+                  <HBox layoutX="35.0" layoutY="120.0" prefHeight="34.0" prefWidth="235.0">
                      <children>
                         <Label text="上课时间：" />
                         <TextField fx:id="inputtime" />
                      </children>
                   </HBox>
-                  <HBox layoutX="35.0" layoutY="367.0" prefHeight="45.0" prefWidth="241.0" spacing="23.0">
+                  <HBox layoutX="35.0" layoutY="367.0" prefHeight="34.0" prefWidth="235.0" spacing="23.0">
                      <children>
                         <Label text="教室：" />
                         <TextField fx:id="inputclassroom" />
                      </children>
                   </HBox>
-                  <HBox layoutX="35.0" layoutY="381.0" prefHeight="45.0" prefWidth="241.0">
+                  <HBox layoutX="35.0" layoutY="381.0" prefHeight="34.0" prefWidth="241.0">
                      <children>
                         <Label text="教师工号：" />
                         <TextField fx:id="inputtcid" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="20.0" layoutY="260.0" prefHeight="34.0" prefWidth="241.0">
+                     <children>
+                        <Label text="教师姓名：" />
+                        <TextField fx:id="inputtcname" />
                      </children>
                   </HBox>
                   <Button fx:id="addbtn" mnemonicParsing="false" onAction="#add" prefHeight="23.0" prefWidth="64.0" text="添加" />

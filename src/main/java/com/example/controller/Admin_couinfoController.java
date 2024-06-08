@@ -64,6 +64,9 @@ public class Admin_couinfoController {
     private TableColumn<Teacher, Integer> tcid;
 
     @FXML
+    private TableColumn<?, ?> tcname;
+
+    @FXML
     void add(ActionEvent event) {
 
     }
