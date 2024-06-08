@@ -1,6 +1,7 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.StudentDAO;
+import com.example.dao.UserDAO;
 import com.example.entity.Student;
 import com.example.util.DBUtil;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class StudentDAOimpl implements StudentDAO {
     private DBUtil dbUtil;
-    private static class ResultException extends Exception {
+    static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -153,8 +154,6 @@ public class StudentDAOimpl implements StudentDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Student not found");
-            } else if (resultSet.next()) {
-                throw new ResultException("Duplicate student ID");
             } else {
                 student.setUsername(resultSet.getString("userName"));
                 student.setId(resultSet.getInt("userID"));
@@ -175,6 +174,10 @@ public class StudentDAOimpl implements StudentDAO {
 
     @Override
     public void UpdatePassword(int id, String newPassword) {
+        //user表更改密码
+        UserDAO userDAO = new UserDAOimpl();
+        userDAO.UpdatePassword(id, newPassword);
+
         Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM student WHERE userID = ?";

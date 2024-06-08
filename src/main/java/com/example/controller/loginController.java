@@ -48,6 +48,7 @@ public class loginController {
     @FXML
     void confirm(ActionEvent event) {
         boolean login = false;
+        int id = 0;
         if(adlog.isSelected()){
             AdminDAO adminDAO=new AdminDAOimpl();
             List<Admin> admins= adminDAO.getAllAdmins();
@@ -63,10 +64,11 @@ public class loginController {
                 for (Admin admin : admins) {
                     if (admin.getUsername().equals(username.getText()) && admin.getPassword().equals(pwd.getText())) {
                         login=true;
+                        id=admin.getId();
                     }
                 }
                 if(login){
-                    loaderFXML("/Admin.fxml");
+                    loaderFXML("/Admin.fxml",id);
                 }
 
                 else {
@@ -93,10 +95,11 @@ public class loginController {
                 for (Student student : students) {
                     if (student.getUsername().equals(username.getText()) && student.getPassword().equals(pwd.getText())) {
                         login=true;
+                        id=student.getId();
                     }
                 }
                 if(login){
-                    loaderFXML("/Student.fxml");
+                    loaderFXML("/Student.fxml",id);
                 }
 
                 else {
@@ -123,10 +126,11 @@ public class loginController {
                 for (Teacher teacher : teachers) {
                     if (teacher.getUsername().equals(username.getText()) && teacher.getPassword().equals(pwd.getText())) {
                         login=true;
+                        id=teacher.getId();
                     }
                 }
                 if(login){
-                    loaderFXML("/Teacher.fxml");
+                    loaderFXML("/Teacher.fxml",id);
                 }
                 else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -138,12 +142,11 @@ public class loginController {
             }
         }
     }
-    void loaderFXML(String fxmlfile){
+    void loaderFXML(String fxmlfile,int id){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlfile));
 
         try {
-            String Username=username.getText();
-            // 获取Admin.fxml文件的根节点
+            // 获取.fxml文件的根节点
             Parent root = loader.load();
 
             // 创建新的舞台（Stage）
@@ -157,7 +160,7 @@ public class loginController {
 
             Stage stage=(Stage)yes.getScene().getWindow();
 
-            newStage.setUserData(Username);
+            newStage.setUserData(id);
 
             stage.close();
 

@@ -1,6 +1,7 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.TeacherDAO;
+import com.example.dao.UserDAO;
 import com.example.entity.Teacher;
 import com.example.util.DBUtil;
 
@@ -155,8 +156,6 @@ public class TeacherDAOimpl implements TeacherDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Teacher not found");
-            } else if (resultSet.next()) {
-                throw new ResultException("Duplicate teacher ID");
             } else {
                 teacher.setUsername(resultSet.getString("userName"));
                 teacher.setId(resultSet.getInt("userID"));
@@ -177,6 +176,9 @@ public class TeacherDAOimpl implements TeacherDAO {
 
     @Override
     public void UpdatePassword(int id, String newPassword) {
+        //user表更改密码
+        UserDAO userDAO = new UserDAOimpl();
+        userDAO.UpdatePassword(id, newPassword);
         Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM teacher WHERE userID = ?";

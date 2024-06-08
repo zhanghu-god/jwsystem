@@ -12,4 +12,5 @@ public interface UserDAO {
     List<User> getAllUsers();
 
     User getuserById(int id);
+    void UpdatePassword(int id, String newPassword);
 }

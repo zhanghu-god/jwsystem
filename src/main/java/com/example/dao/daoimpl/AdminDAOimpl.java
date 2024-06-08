@@ -1,6 +1,7 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.AdminDAO;
+import com.example.dao.UserDAO;
 import com.example.entity.Admin;
 import com.example.util.DBUtil;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class AdminDAOimpl implements AdminDAO {
     private DBUtil dbUtil;
-    private static class ResultException extends Exception {
+    static class ResultException extends Exception {
         public ResultException(String message) {
             super(message);
         }
@@ -140,18 +141,16 @@ public class AdminDAOimpl implements AdminDAO {
     @Override
     public Admin getAdminById(int id) {
         Admin admin = new Admin(id, "name", "10000" );
-        Connection conn = dbUtil.getconn();
+        Connection conn = DBUtil.getconn();
         try {
             String sql = "SELECT * FROM admin WHERE userID = ?";
             Object[] params = new Object[]{id};
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            dbUtil.setParam(preparedStatement,params);
+            DBUtil.setParam(preparedStatement,params);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new ResultException("Admin not found");
-            } else if (resultSet.next()) {
-                throw new ResultException("Duplicate admin ID");
-            } else {
+            }else {
                 admin.setUsername(resultSet.getString("userName"));
                 admin.setId(resultSet.getInt("userID"));
                 admin.setPassword(resultSet.getString("password"));
@@ -171,6 +170,9 @@ public class AdminDAOimpl implements AdminDAO {
 
     @Override
     public void UpdatePassword(int id, String newPassword) {
+        //user表更改密码
+        UserDAO userDAO = new UserDAOimpl();
+        userDAO.UpdatePassword(id, newPassword);
         Connection conn = dbUtil.getconn();
         try {
             String sql_find = "SELECT * FROM admin WHERE userID = ?";

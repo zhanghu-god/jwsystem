@@ -1,9 +1,12 @@
 package com.example.dao.daoimpl;
 
 import com.example.dao.UserDAO;
+import com.example.entity.Admin;
 import com.example.entity.User;
 import com.example.util.DBUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -90,8 +93,6 @@ public class UserDAOimpl implements UserDAO {
             ResultSet resultSet = DBUtil.executeQuery(sql, params);
             if (!resultSet.next()) {
                 throw new UserDAOimpl.ResultException("user not found");
-            } else if (resultSet.next()) {
-                throw new UserDAOimpl.ResultException("Duplicate user ID");
             } else {
                 user.setUsername(resultSet.getString("userName"));
                 user.setId(resultSet.getInt("userID"));
@@ -100,6 +101,38 @@ public class UserDAOimpl implements UserDAO {
             }
         } catch (SQLException | UserDAOimpl.ResultException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public void UpdatePassword(int id, String newPassword){
+        Connection conn = DBUtil.getconn();
+
+        try {
+            String sql_find = "SELECT * FROM user WHERE userID = ?";
+            Object[] params_find = new Object[] {id} ;
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_find);
+            DBUtil.setParam(preparedStatement, params_find);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(!resultSet.next()) {
+                // 用户不存在
+                throw new StudentDAOimpl.ResultException("User not found");
+            } else if (resultSet.next()) {
+                //重复ID
+                throw new StudentDAOimpl.ResultException("Duplicate user ID");
+            } else {
+                String sql = "UPDATE user SET password = ? WHERE userID = ?";
+                Object[]params = new Object[]{newPassword, id};
+                DBUtil.update(sql, params);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (StudentDAOimpl.ResultException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 }
