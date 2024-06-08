@@ -24,7 +24,7 @@ public class AdminController {
     private JFXButton stuinfo;
 
     @FXML
-    private JFXButton tcinfo;
+    private JFXButton couinfo;
 
     @FXML
     void showchangepwd(ActionEvent event) {
@@ -44,7 +44,7 @@ public class AdminController {
     }
 
     @FXML
-    void showtcinfo(ActionEvent event) {
+    void showcouinfo(ActionEvent event) {
         loadView("/Admin_couinfo.fxml");
     }
 

@@ -12,6 +12,11 @@
 
 <AnchorPane prefHeight="285.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.loginController">
    <children>
+      <ImageView fitHeight="387.0" fitWidth="522.0" opacity="0.12" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/t01fd3d95c7bca5849f.jpg" />
+         </image>
+      </ImageView>
    <PasswordField fx:id="pwd" layoutX="180.0" layoutY="144.0" promptText="填写密码" />
    <Label layoutX="124.0" layoutY="94.0" prefHeight="23.0" prefWidth="51.0" text="用户名：" />
    <Label layoutX="134.0" layoutY="148.0" text="密码：" />
@@ -24,10 +29,5 @@
       <JFXRadioButton fx:id="tclog" layoutX="230.0" layoutY="205.0" text="教师" toggleGroup="$type" />
       <JFXRadioButton fx:id="stulog" layoutX="290.0" layoutY="205.0" text="学生" toggleGroup="$type" />
       <TextField fx:id="username" layoutX="180.0" layoutY="94.0" promptText="请填写用户名" />
-      <ImageView fitHeight="387.0" fitWidth="522.0" opacity="0.12" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image/t01fd3d95c7bca5849f.jpg" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
