@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Course {
-    int courseID;
-    String courseName;
-    int teacherID;
-    String courseTime;
-    String classRoom;
+    private int courseID;
+    private String courseName;
+    private int teacherID;
+    private String courseTime;
+    private String classRoom;
     public Course(){
 
     }
