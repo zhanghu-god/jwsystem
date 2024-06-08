@@ -6,6 +6,7 @@ public interface selectedcourseDAO {
     public void addselectedcourse(int courseID, int studentID);
     public void delete(int courseID,int studentID);
     public void setMark(int courseID,int studentID,int mark);
+    public Integer getMark(int courseID,int studentID);
     public List<selectedcourse> getByCourseID(int courseID);
     public List<selectedcourse> getByStudentID(int studentID);
 

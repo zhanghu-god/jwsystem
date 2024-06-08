@@ -33,7 +33,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             else{
                 DBUtil.closeAll(rs1, stmt, conn);
                 String sql = "insert into selectedcourse values(?,?,?)";
-                Object[] object = {courseID,studentID,0};
+                Object[] object = {courseID,studentID,null};
                 DBUtil.update(sql,object);
             }
         }
@@ -93,6 +93,31 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
         catch (ResultException | SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+    @Override
+    public Integer getMark(int courseID,int studentID){
+        String sql1  = "select * from selectedcourse where courseID = ? and studentID = ? and mark is not null";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        Integer mark;
+        try{
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
+                throw new ResultException("没有成绩");
+            }else{
+                mark = rs1.getInt("mark");
+                return mark;
+            }
+        }catch (ResultException | SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
     @Override
     public List<selectedcourse>  getByCourseID(int courseID){
