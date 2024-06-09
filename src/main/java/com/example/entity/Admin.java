@@ -13,6 +13,9 @@ public class Admin extends User{
         this.password=password;
         this.username=username;
     }
+    public Admin(){
+
+    }
 
     // 管理员独有的属性
     private String role;
