@@ -44,8 +44,6 @@ public class AdminController {
 
     @FXML
     void showstuinfo(ActionEvent event) {
-        System.out.println(main.getScene().getWindow().getUserData());
-
         loadView("/Admin_stuinfo.fxml");
     }
 

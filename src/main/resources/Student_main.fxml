@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Admin_mainController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.Student_mainCon">
    <children>
       <ImageView fitHeight="505.0" fitWidth="831.0" layoutX="-2.0" layoutY="-14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-91.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-229.0" AnchorPane.topAnchor="-14.0">
          <image>
@@ -21,5 +21,18 @@
          <font>
             <Font size="36.0" />
          </font></Label>
+      <ImageView fitHeight="84.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/stuimg2024-06-09 165941.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <Label fx:id="stuname" layoutX="8.0" layoutY="92.0" prefHeight="32.0" prefWidth="73.0" text="Student" textFill="#131720">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

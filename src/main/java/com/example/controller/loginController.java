@@ -144,6 +144,7 @@ public class loginController {
         }
     }
     void loaderFXML(String fxmlfile,int id){
+        Userid.id = id;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlfile));
 
         try {
@@ -159,12 +160,8 @@ public class loginController {
             //设置舞台不可伸缩
             newStage.setResizable(false);
 
-            Userid.id=id;
-
             // 设置新的场景（Scene）
-            Scene scene = new Scene(root, 810, 500);
-
-            Userid.id = id;
+            Scene scene = new Scene(root, 810,480);
 
             // 设置新的舞台的场景
             newStage.setScene(scene);

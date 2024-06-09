@@ -21,5 +21,18 @@
          <font>
             <Font size="36.0" />
          </font></Label>
+      <ImageView fitHeight="84.0" fitWidth="82.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/t01ef950e32d25fc352.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <Label layoutX="8.0" layoutY="92.0" prefHeight="32.0" prefWidth="73.0" text="Admin" textFill="#131720">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
