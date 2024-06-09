@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import com.example.entity.Course;
 import com.example.dao.daoimpl.CourseDAOimpl;
 import javafx.scene.control.cell.PropertyValueFactory;
-import com.example.entity.courseList;
 import java.sql.SQLException;
 import com.example.dao.daoimpl.selectedcourseDAOimpl;
 import com.example.entity.Course;
@@ -44,9 +43,9 @@ public class Student_selectCon {
     private TableColumn<?, ?> time;
 
     @FXML
-    private TableView<courseList> tableview;
+    private TableView<Course> tableview;
 
-    ObservableList<courseList> courseList1 = FXCollections.observableArrayList();
+
 
     public void initialize() throws SQLException {
         loadData();
@@ -54,26 +53,14 @@ public class Student_selectCon {
     public void loadData() throws SQLException {
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         List<Course> list = courseDAOimpl.getAllCourses();
-        if(list != null) {
-            for (int i = 0; i < list.size(); i++) {
-                TeacherDAOimpl teacherDAOimpl = new TeacherDAOimpl();
-                courseList courseList0 = new courseList();
-                courseList0.setCourseID(list.get(i).getCourseID());
-                courseList0.setCourseName(list.get(i).getCourseName());
-                courseList0.setClassRoom(list.get(i).getClassRoom());
-                courseList0.setCourseTime(list.get(i).getCourseTime());
-                Teacher teacher = teacherDAOimpl.getTeacherById(list.get(i).getTeacherID());
-                courseList0.setTeacherName(teacher.getUsername());
-                courseList1.add(courseList0);
-            }
-            classroom.setCellValueFactory(new PropertyValueFactory<>("classRoom"));
-            courseid.setCellValueFactory(new PropertyValueFactory<>("courseID"));
-            coursename.setCellValueFactory(new PropertyValueFactory<>("courseName"));
-            teachername.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
-            time.setCellValueFactory(new PropertyValueFactory<>("courseTime"));
-            tableview.setItems(courseList1);
+        ObservableList<Course> courseList1 = FXCollections.observableArrayList(list);
+        classroom.setCellValueFactory(new PropertyValueFactory<>("classRoom"));
+        courseid.setCellValueFactory(new PropertyValueFactory<>("courseID"));
+        coursename.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+        teachername.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
+        time.setCellValueFactory(new PropertyValueFactory<>("courseTime"));
+        tableview.setItems(courseList1);
         }
-    }
     @FXML
     void select(ActionEvent event) {
         int ID = (int)confirm.getScene().getWindow().getUserData();
