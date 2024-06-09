@@ -6,6 +6,16 @@ public class scoreList {
     private int studentID;
     private String studentName;
 
+    private int courseID;
+
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
+    }
+
     public String getCourseName() {
         return courseName;
     }

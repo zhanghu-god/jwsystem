@@ -118,6 +118,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
             stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
             rs1 = stmt.executeQuery();
             if (!rs1.next()){
                 DBUtil.closeAll(rs1, stmt, conn);
