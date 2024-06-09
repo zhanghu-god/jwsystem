@@ -9,6 +9,7 @@ import com.example.dao.daoimpl.TeacherDAOimpl;
 import com.example.entity.Admin;
 import com.example.entity.Student;
 import com.example.entity.Teacher;
+import com.example.entity.Userid;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -154,6 +155,8 @@ public class loginController {
 
             // 设置新的场景（Scene）
             Scene scene = new Scene(root, 800, 600);
+
+            Userid.id = id;
 
             // 设置新的舞台的场景
             newStage.setScene(scene);

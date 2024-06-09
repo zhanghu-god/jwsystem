@@ -41,26 +41,28 @@ public class Teacher_stuinfoCon {
     @FXML
     private TableView<scoreList> tableview;
 
+    @FXML
+    private TableColumn<?, ?> cid;
+
     ObservableList<scoreList> sl = FXCollections.observableArrayList();
 
     public void initialize() {
         loadData();
-        tableview.refresh();
-        System.out.println("set");
     }
     public void loadData() {
-        int ID = (int)confirm.getScene().getWindow().getUserData();
+        int ID = Userid.id;
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         selectedcourseDAOimpl selectedcourseDAOimpl = new selectedcourseDAOimpl();
         StudentDAOimpl studentDAOimpl = new StudentDAOimpl();
         List<Course> courselist = courseDAOimpl.getCourseByTeacherID(ID);
         if(courselist != null){
             for(Course course : courselist){
-                scoreList score = new scoreList();
-                score.setCourseName(course.getCourseName());
                 List<selectedcourse> select = selectedcourseDAOimpl.getByCourseID(course.getCourseID());
                 if(select != null){
                     for(selectedcourse s : select){
+                        scoreList score = new scoreList();
+                        score.setCourseName(course.getCourseName());
+                        score.setCourseID(course.getCourseID());
                         score.setScore(s.getMark());
                         score.setStudentID(s.getStudentID());
                         Student stu = studentDAOimpl.getStudentById(s.getStudentID());
@@ -70,6 +72,7 @@ public class Teacher_stuinfoCon {
                 }
             }
         }
+        cid.setCellValueFactory(new PropertyValueFactory<>("courseID"));
         stuname.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         coursename.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
