@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 
 import com.example.dao.daoimpl.selectedcourseDAOimpl;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -42,14 +43,14 @@ public class Teacher_stuinfoCon {
     private TableView<scoreList> tableview;
 
     ObservableList<scoreList> sl = FXCollections.observableArrayList();
-
+    @FXML
     public void initialize() {
         loadData();
         tableview.refresh();
         System.out.println("set");
     }
     public void loadData() {
-        int ID = (int)confirm.getScene().getWindow().getUserData();
+        int ID = Userid.id;
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         selectedcourseDAOimpl selectedcourseDAOimpl = new selectedcourseDAOimpl();
         StudentDAOimpl studentDAOimpl = new StudentDAOimpl();

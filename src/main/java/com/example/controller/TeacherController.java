@@ -4,8 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -25,6 +27,7 @@ public class TeacherController {
     @FXML
     private JFXButton stuinfo;
 
+    @FXML
     public void initialize(){
         // 设置默认显示的界面
         loadView("/Teacher_main.fxml");
