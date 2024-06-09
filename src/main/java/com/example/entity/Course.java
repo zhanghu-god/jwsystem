@@ -9,6 +9,7 @@ public class Course {
     private int teacherID;
     private String courseTime;
     private String classRoom;
+    private String teacherName;
     public Course(){
 
     }
@@ -59,5 +60,13 @@ public class Course {
 
     public void setClassRoom(String classRoom) {
         this.classRoom = classRoom;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }

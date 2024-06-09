@@ -18,10 +18,11 @@
          <center>
             <TableView fx:id="tableview" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="coursename" prefWidth="75.0" text="课程" />
-                <TableColumn fx:id="stuid" prefWidth="75.0" text="学号" />
-                  <TableColumn fx:id="stuname" prefWidth="75.0" text="名称" />
-                  <TableColumn fx:id="score" prefWidth="75.0" text="成绩" />
+                  <TableColumn fx:id="cid" prefWidth="65.0" text="课程号" />
+                <TableColumn fx:id="coursename" prefWidth="65.0" text="课程" />
+                <TableColumn fx:id="stuid" prefWidth="65.0" text="学号" />
+                  <TableColumn fx:id="stuname" prefWidth="65.0" text="名称" />
+                  <TableColumn fx:id="score" prefWidth="65.0" text="成绩" />
               </columns>
             </TableView>
          </center>

@@ -76,6 +76,37 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             return conduct;
         }
     }
+
+    @Override
+    public int delete(int courseID){
+        String sql1 = "select * from selectedcourse where courseID = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs1 = null;
+        int conduct = 0;
+        try {
+            conn = DBUtil.getconn();
+            stmt = conn.prepareStatement(sql1);
+            stmt.setObject(1, courseID);
+            rs1 = stmt.executeQuery();
+            if (!rs1.next()){
+                DBUtil.closeAll(rs1, stmt, conn);
+                throw new ResultException("未选过该课程");
+            }
+            else{
+                DBUtil.closeAll(rs1, stmt, conn);
+                String sql = "delete from selectedcourse where courseID = ? ";
+                Object[] object = {courseID};
+                DBUtil.update(sql,object);
+                conduct = 1;
+            }
+        }
+        catch (ResultException | SQLException e){
+            System.out.println(e.getMessage());
+        }finally {
+            return conduct;
+        }
+    }
     @Override
     public int  setMark(int courseID,int studentID,int mark){
         String sql1  = "select * from selectedcourse where courseID = ? and studentID = ?";
@@ -87,6 +118,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             conn = DBUtil.getconn();
             stmt = conn.prepareStatement(sql1);
             stmt.setObject(1, courseID);
+            stmt.setObject(2, studentID);
             rs1 = stmt.executeQuery();
             if (!rs1.next()){
                 DBUtil.closeAll(rs1, stmt, conn);

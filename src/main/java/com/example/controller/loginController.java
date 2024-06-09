@@ -164,6 +164,8 @@ public class loginController {
             // 设置新的场景（Scene）
             Scene scene = new Scene(root, 810, 500);
 
+            Userid.id = id;
+
             // 设置新的舞台的场景
             newStage.setScene(scene);
 

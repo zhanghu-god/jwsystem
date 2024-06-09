@@ -54,6 +54,11 @@ public class AdminController {
         loadView("/Admin_couinfo.fxml");
     }
 
+    @FXML
+    void showteainfo(ActionEvent event) {
+        loadView("/Admin_teainfo.fxml");
+    }
+
     private void loadView(String fxmlFile) {
         try {
             Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
@@ -62,5 +67,6 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
 
 }
