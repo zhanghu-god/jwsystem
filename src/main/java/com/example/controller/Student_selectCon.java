@@ -59,6 +59,8 @@ public class Student_selectCon {
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         List<Course> list = courseDAOimpl.getAllCourses();
         for (Course c : list) {
+            Teacher teacher = new TeacherDAOimpl().getTeacherById(c.getTeacherID());
+            c.setTeacherName(teacher.getUsername());
             courseList.add(c);
         }
         classroom.setCellValueFactory(new PropertyValueFactory<>("classRoom"));
