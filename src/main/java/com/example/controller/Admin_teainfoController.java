@@ -2,8 +2,10 @@ package com.example.controller;
 
 import com.example.dao.CourseDAO;
 import com.example.dao.TeacherDAO;
+import com.example.dao.UserDAO;
 import com.example.dao.daoimpl.CourseDAOimpl;
 import com.example.dao.daoimpl.TeacherDAOimpl;
+import com.example.dao.daoimpl.UserDAOimpl;
 import com.example.entity.Course;
 import com.example.entity.Teacher;
 import javafx.collections.FXCollections;
@@ -49,6 +51,7 @@ public class Admin_teainfoController {
         Teacher teacher = new Teacher();
 
         TeacherDAO teacherDAO = new TeacherDAOimpl();
+        UserDAO userDAO = new UserDAOimpl();
 
         teacher.setId(Integer.parseInt(inputid.getText()));
         teacher.setUsername(inputname.getText());
@@ -62,6 +65,7 @@ public class Admin_teainfoController {
             alert.showAndWait();
             return;
         } else {
+            userDAO.AddUser(teacher);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(null);
             alert.setHeaderText(null);
@@ -78,6 +82,7 @@ public class Admin_teainfoController {
         alert.showAndWait();
         TeacherDAO teacherDAO = new TeacherDAOimpl();
         CourseDAO courseDAO = new CourseDAOimpl();
+        UserDAO userDAO = new UserDAOimpl();
         if(teacherDAO.DeleteTeacher(Integer.parseInt(inputid.getText()))==0){
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("错误");
@@ -91,6 +96,7 @@ public class Admin_teainfoController {
                     courseDAO.deleteCourse(course.getCourseID());
                 }
             }
+            userDAO.DeleteUser(Integer.parseInt(inputid.getText()));
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("提示");
             alert.setContentText("成功删除教师信息!");

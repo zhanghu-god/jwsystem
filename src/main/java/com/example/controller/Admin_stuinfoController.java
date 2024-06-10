@@ -1,10 +1,13 @@
 package com.example.controller;
 
 import com.example.dao.StudentDAO;
+import com.example.dao.UserDAO;
 import com.example.dao.daoimpl.StudentDAOimpl;
+import com.example.dao.daoimpl.UserDAOimpl;
 import com.example.dao.daoimpl.selectedcourseDAOimpl;
 import com.example.dao.selectedcourseDAO;
 import com.example.entity.Student;
+import com.example.entity.User;
 import com.example.entity.selectedcourse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,6 +54,7 @@ public class Admin_stuinfoController {
         Student student = new Student();
 
         StudentDAO studentDAO = new StudentDAOimpl();
+        UserDAO userDAO = new UserDAOimpl();
 
         student.setId(Integer.parseInt(inputid.getText()));
         student.setUsername(inputname.getText());
@@ -64,6 +68,7 @@ public class Admin_stuinfoController {
             alert.showAndWait();
             return;
         } else {
+            userDAO.AddUser(student);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(null);
             alert.setHeaderText("学生添加成功!");
@@ -76,6 +81,7 @@ public class Admin_stuinfoController {
     void del(ActionEvent event) throws SQLException {
         StudentDAO studentDAO = new StudentDAOimpl();
         selectedcourseDAO selectedcourseDAO = new selectedcourseDAOimpl();
+        UserDAO userDAO = new UserDAOimpl();
         if(studentDAO.DeleteStudent(Integer.parseInt(inputid.getText()))==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -89,6 +95,7 @@ public class Admin_stuinfoController {
                     selectedcourseDAO.delete(selectedcourse.getCourseID(), selectedcourse.getStudentID());
                 }
             }
+            userDAO.DeleteUser(Integer.parseInt(inputid.getText()));
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("成功删除学生信息!");
