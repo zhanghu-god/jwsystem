@@ -40,7 +40,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             }
         }
         catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -71,7 +71,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             }
         }
         catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -102,7 +102,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             }
         }
         catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -133,7 +133,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
             }
         }
         catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -159,7 +159,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
                 return mark;
             }
         }catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return null;
     }
@@ -191,7 +191,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
         }
         }
         catch (ResultException | SQLException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return null;
     }
@@ -224,7 +224,7 @@ public class selectedcourseDAOimpl implements selectedcourseDAO{
         }
     }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return null;
     }

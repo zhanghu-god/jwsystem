@@ -78,6 +78,16 @@ public class Teacher_courseinfoCon {
         //校验教师信息
         TeacherDAO teacherDAO = new TeacherDAOimpl();
         teacher = teacherDAO.getTeacherById(Userid.id);
+        if(inputid.getText().isBlank()||inputname.getText().isBlank()
+                ||inputtime.getText().isBlank()||inputclassroom.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("请填写完整信息!");
+            alert.showAndWait();
+            return;
+        }else{
+        try{
         course.setCourseID(Integer.parseInt(inputid.getText()));
         course.setCourseName(inputname.getText());
         course.setClassRoom(inputclassroom.getText());
@@ -85,20 +95,35 @@ public class Teacher_courseinfoCon {
         course.setCourseTime(inputtime.getText());
 
         CourseDAO courseDAO = new CourseDAOimpl();
-        courseDAO.addCourse(course.getCourseID(), course.getCourseName(),
-                course.getTeacherID(),course.getCourseTime(),course.getClassRoom());
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(null);
-        alert.setHeaderText("课程添加成功!");
-        alert.showAndWait();
-
+        if(courseDAO.addCourse(course.getCourseID(), course.getCourseName(),
+        course.getTeacherID(),course.getCourseTime(),course.getClassRoom()) ==1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(null);
+            alert.setHeaderText("课程添加成功!");
+            alert.showAndWait();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("课程ID已存在!");
+            alert.showAndWait();
+            return;
+        }
         loadData();
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的课程ID!");
+            alert.showAndWait();
+        }
+        }
     }
 
     @FXML
     void del(ActionEvent event) {
         CourseDAO courseDAO = new CourseDAOimpl();
+        try{
         if(courseDAO.deleteCourse(Integer.parseInt(inputid.getText()))==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("警告");
@@ -119,6 +144,13 @@ public class Teacher_courseinfoCon {
         alert.showAndWait();
 
         loadData();
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的课程ID!");
+            alert.showAndWait();
+        }
     }
 
     @FXML

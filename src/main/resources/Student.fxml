@@ -9,7 +9,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #DCDCDC;" BorderPane.alignment="CENTER">
          <children>
             <JFXButton fx:id="main" onAction="#showmain" prefHeight="63.0" prefWidth="101.0" text="个人主页" />
-            <JFXButton fx:id="select" layoutX="10.0" layoutY="10.0" onAction="#showselect" prefHeight="63.0" prefWidth="101.0" text="选课" />
+            <JFXButton fx:id="select" layoutX="10.0" layoutY="10.0" onAction="#showselect" prefHeight="63.0" prefWidth="101.0" text="选课/退课" />
             <JFXButton fx:id="checkscore" layoutX="10.0" layoutY="73.0" onAction="#showcheckscore" prefHeight="63.0" prefWidth="101.0" text="查看成绩" />
             <JFXButton fx:id="changepwd" layoutX="10.0" layoutY="136.0" onAction="#showchangepwd" prefHeight="63.0" prefWidth="101.0" text="修改密码" />
             <JFXButton fx:id="logout" layoutX="10.0" layoutY="136.0" onAction="#showlogout" prefHeight="63.0" prefWidth="101.0" text="退出登录" />

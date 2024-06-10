@@ -78,6 +78,17 @@ public class Admin_couinfoController {
         Teacher teacher = new Teacher();
         //校验教师信息
         TeacherDAO teacherDAO = new TeacherDAOimpl();
+        if(inputtcid.getText().isBlank() || inputtcname.getText().isBlank()||
+                inputcouname.getText().isBlank() || inputclassroom.getText().isBlank()
+                || inputtime.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("请填写完整信息!");
+            alert.showAndWait();
+            return;
+        }else{
+        try{
         teacher = teacherDAO.getTeacherById(Integer.parseInt(inputtcid.getText()));
         if (teacher == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -111,12 +122,21 @@ public class Admin_couinfoController {
         alert.showAndWait();
 
         loadData();
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的ID!");
+            alert.showAndWait();
+        }
+        }
     }
 
 
     @FXML
     void del(ActionEvent event) throws SQLException {
         CourseDAO courseDAO = new CourseDAOimpl();
+        try{
         if(courseDAO.deleteCourse(Integer.parseInt(inputcouid.getText()))==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("警告");
@@ -137,6 +157,13 @@ public class Admin_couinfoController {
         alert.showAndWait();
 
         loadData();
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("请输入课程号!");
+            alert.showAndWait();
+        }
     }
 
     @FXML

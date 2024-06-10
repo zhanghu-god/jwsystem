@@ -34,11 +34,11 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "insert into course values(?, ?, ?, ?, ?)";
                 Object[] params = {courseID, courseName, teacherID, courseTime, classRoom};
                 DBUtil.update(sql, params);
-                System.out.println("添加成功");
+                //System.out.println("添加成功");
                 conduct = 1;
             }
         }catch(SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             DBUtil.closeAll(rs1, stmt, conn);
             return conduct;
@@ -64,12 +64,12 @@ public class CourseDAOimpl implements CourseDAO{
                 String sql = "delete from course where courseID = ?";
                 Object[] params = {courseID};
                 DBUtil.update(sql, params);
-                System.out.println("删除成功");
+                //System.out.println("删除成功");
                 conduct = 1;
                 }
             }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             DBUtil.closeAll(rs1, stmt, conn);
             return conduct;
@@ -102,7 +102,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             }
         return null;
     }
@@ -136,7 +136,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return null;
     }
@@ -170,7 +170,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return null;
     }
@@ -199,7 +199,7 @@ public class CourseDAOimpl implements CourseDAO{
                 }
         }
         catch (SQLException | ResultException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             }finally {
             return conduct;
         }
@@ -229,7 +229,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -259,7 +259,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
@@ -289,7 +289,7 @@ public class CourseDAOimpl implements CourseDAO{
             }
         }
         catch (SQLException | ResultException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }finally {
             return conduct;
         }
