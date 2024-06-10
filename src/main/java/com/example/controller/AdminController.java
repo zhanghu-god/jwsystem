@@ -63,45 +63,16 @@ public class AdminController {
     }
 
     @FXML
-    void showlogout(ActionEvent event) {
+    void showlogout(ActionEvent event) throws IOException {
         Userid.id = 0;
-        loaderFXML("/Login.fxml");
-    }
-
-    private void loaderFXML(String s) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(s));
-
-        try {
-            // 获取.fxml文件的根节点
-            Parent root = loader.load();
-
-            // 创建新的舞台（Stage）
-            Stage newStage = new Stage();
-
-            // 设置新的舞台的标题
-            newStage.setTitle("登录界面");
-
-            //设置舞台不可伸缩
-            newStage.setResizable(false);
-
-            // 设置新的场景（Scene）
-            Scene scene = new Scene(root, 522,285);
-
-            // 设置新的舞台的场景
-            newStage.setScene(scene);
-
-            Stage stage=(Stage)logout.getScene().getWindow();
-
-            newStage.setUserData(Userid.id);
-
-            stage.close();
-
-            // 显示新的舞台
-            newStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) border.getScene().getWindow();
+        //加载登录界面绝对路径
+        Parent root=FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Login.fxml")));
+        stage.setTitle("登录界面");
+        //设置窗口不可伸缩
+        stage.setResizable(false);
+        stage.setScene(new Scene(root, 522, 294));
+        stage.show();
     }
 
     private void loadView(String fxmlFile) {
