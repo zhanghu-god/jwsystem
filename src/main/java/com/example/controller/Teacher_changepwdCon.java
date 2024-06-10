@@ -2,10 +2,13 @@ package com.example.controller;
 
 import com.example.dao.StudentDAO;
 import com.example.dao.TeacherDAO;
+import com.example.dao.UserDAO;
 import com.example.dao.daoimpl.StudentDAOimpl;
 import com.example.dao.daoimpl.TeacherDAOimpl;
+import com.example.dao.daoimpl.UserDAOimpl;
 import com.example.entity.Student;
 import com.example.entity.Teacher;
+import com.example.entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -41,6 +44,8 @@ public class Teacher_changepwdCon {
         TeacherDAO teacherDAO=new TeacherDAOimpl();
 
         Teacher teacher=teacherDAO.getTeacherById(id);
+        UserDAO userDAO=new UserDAOimpl();
+        User user=userDAO.getuserById(id);
         if(!teacher.getPassword().equals(oldPassword)){
             // 提示用户旧密码不正确
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -60,6 +65,7 @@ public class Teacher_changepwdCon {
         else {
             // 调用dao层的方法执行修改密码操作
             teacherDAO.UpdatePassword(id, newPassword);
+            userDAO.UpdatePassword(id, newPassword);
             // 修改成功后，关闭当前窗口
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("修改成功");
