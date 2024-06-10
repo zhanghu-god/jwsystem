@@ -28,6 +28,12 @@ public class Student_selectCon {
     private Button confirm;
 
     @FXML
+    private Button drop;
+
+    @FXML
+    private Button refresh;
+
+    @FXML
     private TableColumn<?, ?> courseid;
 
     @FXML
@@ -50,24 +56,28 @@ public class Student_selectCon {
     public void initialize() throws SQLException {
         loadData();
     }
+    ObservableList<Course> courseList = FXCollections.observableArrayList();
     public void loadData() throws SQLException {
+        courseList.clear();
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         List<Course> list = courseDAOimpl.getAllCourses();
-        ObservableList<Course> courseList1 = FXCollections.observableArrayList(list);
+        for (Course c : list) {
+            courseList.add(c);
+        }
         classroom.setCellValueFactory(new PropertyValueFactory<>("classRoom"));
         courseid.setCellValueFactory(new PropertyValueFactory<>("courseID"));
         coursename.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         teachername.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
         time.setCellValueFactory(new PropertyValueFactory<>("courseTime"));
-        tableview.setItems(courseList1);
-        }
+        tableview.setItems(courseList);
+    }
     @FXML
-    void select(ActionEvent event) {
+    void select(ActionEvent event) throws SQLException {
         int ID = (int)confirm.getScene().getWindow().getUserData();
         try{
         int courseID = Integer.parseInt(inputid.getText());
         List<Course> list = new ArrayList<>();
-        int i;
+        int i = 0;
         CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
         list = courseDAOimpl.getAllCourses();
         if(list == null){
@@ -112,5 +122,64 @@ public class Student_selectCon {
             alert.setContentText("请输入正确的课程编号");
             alert.showAndWait();
         }
+        loadData();
+    }
+
+    @FXML
+    void drop(ActionEvent event) throws SQLException {
+        int ID = (int)confirm.getScene().getWindow().getUserData();
+        try{
+            int courseID = Integer.parseInt(inputid.getText());
+            List<Course> list = new ArrayList<>();
+            int i = 0;
+            CourseDAOimpl courseDAOimpl = new CourseDAOimpl();
+            list = courseDAOimpl.getAllCourses();
+            if(list == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("没有课程");
+                alert.showAndWait();
+                return;
+            }
+            for(i = 0; i < list.size(); i++){
+                if(list.get(i).getCourseID() == courseID){
+                    break;
+                }
+            }
+            if(i < list.size()){
+                selectedcourseDAOimpl selectedcourseDAOimpl = new selectedcourseDAOimpl();
+                if(selectedcourseDAOimpl.delete(courseID,ID) == 1){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("退课成功");
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("未选择该课程");
+                    alert.showAndWait();
+                };
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("没有此课程");
+                alert.showAndWait();
+            }
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的课程编号");
+            alert.showAndWait();
+        }
+        loadData();
+    }
+
+    @FXML
+    public void refresh(ActionEvent actionEvent) throws SQLException {
+        loadData();
     }
 }

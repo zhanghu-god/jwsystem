@@ -29,22 +29,30 @@
          <right>
             <VBox prefHeight="400.0" prefWidth="224.0" spacing="40.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="35.0" prefWidth="179.0" text="           操作区">
+                  <Label prefHeight="20.0" prefWidth="179.0" text="           操作区">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="添加课程：" />
+                  <Label text="选课/退课：" />
                   <Label text="输入课程编号：" />
                   <TextField fx:id="inputid" promptText="输入课程编号" />
                   <Button fx:id="confirm" mnemonicParsing="false" onAction="#select" text="确认选课">
                      <VBox.margin>
-                        <Insets left="120.0" />
+                        <Insets left="0.0" />
                      </VBox.margin>
+                  </Button>
+                  <Button fx:id="drop" mnemonicParsing="false" onAction="#drop" text="确认退课">   <VBox.margin>
+                     <Insets left="0.0" />
+                  </VBox.margin>
+                  </Button>
+                  <Button fx:id="refresh" mnemonicParsing="false" onAction="#refresh" text="刷新">   <VBox.margin>
+                     <Insets left="0.0" />
+                  </VBox.margin>
                   </Button>
                </children>
                <padding>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets left="20.0" top="10.0" />
                </padding>
             </VBox>
          </right>
