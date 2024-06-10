@@ -85,14 +85,20 @@ public class Teacher_courseinfoCon {
         course.setCourseTime(inputtime.getText());
 
         CourseDAO courseDAO = new CourseDAOimpl();
-        courseDAO.addCourse(course.getCourseID(), course.getCourseName(),
-                course.getTeacherID(),course.getCourseTime(),course.getClassRoom());
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(null);
-        alert.setHeaderText("课程添加成功!");
-        alert.showAndWait();
-
+        if(courseDAO.addCourse(course.getCourseID(), course.getCourseName(),
+        course.getTeacherID(),course.getCourseTime(),course.getClassRoom()) ==1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(null);
+            alert.setHeaderText("课程添加成功!");
+            alert.showAndWait();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("警告");
+            alert.setHeaderText(null);
+            alert.setContentText("课程ID已存在!");
+            alert.showAndWait();
+            return;
+        }
         loadData();
     }
 
