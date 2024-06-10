@@ -13,6 +13,7 @@
             <JFXButton fx:id="teainfo" onAction="#showteainfo" prefHeight="63.0" prefWidth="101.0" text="教师信息" />
             <JFXButton fx:id="stuinfo" onAction="#showstuinfo" prefHeight="63.0" prefWidth="101.0" text="学生信息" />
             <JFXButton fx:id="changepwd" onAction="#showchangepwd" prefHeight="63.0" prefWidth="101.0" text="修改密码" />
+            <JFXButton fx:id="logout" onAction="#showlogout" prefHeight="63.0" prefWidth="101.0" text="退出登录" />
          </children>
       </VBox>
    </left>
