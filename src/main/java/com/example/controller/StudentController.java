@@ -57,7 +57,7 @@ public class StudentController {
     }
 
     @FXML
-    void showlogout(ActionEvent event) {
+    void showlogout(ActionEvent event) throws IOException {
         Userid.id = 0;
         Stage stage = (Stage) border.getScene().getWindow();
         //加载登录界面绝对路径
