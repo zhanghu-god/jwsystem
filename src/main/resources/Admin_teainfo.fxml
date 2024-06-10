@@ -25,7 +25,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                        <Label text="添加教师：" />
+                        <Label text="添加/删除教师：" />
                         <HBox prefHeight="45.0" prefWidth="241.0" spacing="20.0">
                             <children>
                                 <Label text="工号" />

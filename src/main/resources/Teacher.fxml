@@ -12,6 +12,7 @@
             <JFXButton fx:id="stuinfo" layoutX="10.0" layoutY="10.0" onAction="#showstuinfo" prefHeight="63.0" prefWidth="101.0" text="学生信息" />
             <JFXButton fx:id="courseinfo" layoutX="10.0" layoutY="73.0" onAction="#showcourseinfo" prefHeight="63.0" prefWidth="101.0" text="课程信息" />
             <JFXButton fx:id="changepwd" layoutX="10.0" layoutY="136.0" onAction="#showchangepwd" prefHeight="63.0" prefWidth="101.0" text="修改密码" />
+            <JFXButton fx:id="logout" layoutX="10.0" layoutY="136.0" onAction="#showlogout" prefHeight="63.0" prefWidth="101.0" text="退出登录" />
          </children>
       </VBox>
    </left>

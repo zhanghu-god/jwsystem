@@ -119,9 +119,9 @@ public class Admin_couinfoController {
         CourseDAO courseDAO = new CourseDAOimpl();
         if(courseDAO.deleteCourse(Integer.parseInt(inputcouid.getText()))==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Information Dialog");
+            alert.setTitle("警告");
             alert.setHeaderText(null);
-            alert.setContentText("Course ID does not exist!");
+            alert.setContentText("课程不存在!");
             alert.showAndWait();
             return;
         }
@@ -131,9 +131,9 @@ public class Admin_couinfoController {
         selectedcourseDAO.delete(Integer.parseInt(inputcouid.getText()));
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
+        alert.setTitle("提示");
         alert.setHeaderText(null);
-        alert.setContentText("Delete successfully!");
+        alert.setContentText("删除成功!");
         alert.showAndWait();
 
         loadData();
