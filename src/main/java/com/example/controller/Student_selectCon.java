@@ -31,9 +31,6 @@ public class Student_selectCon {
     private Button drop;
 
     @FXML
-    private Button refresh;
-
-    @FXML
     private TableColumn<?, ?> courseid;
 
     @FXML
@@ -178,8 +175,4 @@ public class Student_selectCon {
         loadData();
     }
 
-    @FXML
-    public void refresh(ActionEvent actionEvent) throws SQLException {
-        loadData();
-    }
 }
