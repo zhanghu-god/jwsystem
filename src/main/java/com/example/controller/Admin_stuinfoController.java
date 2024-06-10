@@ -55,25 +55,40 @@ public class Admin_stuinfoController {
 
         StudentDAO studentDAO = new StudentDAOimpl();
         UserDAO userDAO = new UserDAOimpl();
-
-        student.setId(Integer.parseInt(inputid.getText()));
-        student.setUsername(inputname.getText());
-        student.setPassword(inputid.getText());
-
-        if (studentDAO.AddStudent(student)==0) {
+        if(inputid.getText().isBlank()||inputname.getText().isBlank()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(null);
             alert.setHeaderText(null);
-            alert.setContentText("学生已存在!");
+            alert.setContentText("输入不能为空!");
             alert.showAndWait();
-            return;
-        } else {
-            userDAO.AddUser(student);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(null);
-            alert.setHeaderText("学生添加成功!");
-            alert.showAndWait();
-            loadData();
+        }else{
+            try {
+                student.setId(Integer.parseInt(inputid.getText()));
+                student.setUsername(inputname.getText());
+                student.setPassword(inputid.getText());
+
+                if (studentDAO.AddStudent(student) == 0) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(null);
+                    alert.setHeaderText(null);
+                    alert.setContentText("学生已存在!");
+                    alert.showAndWait();
+                    return;
+                } else {
+                    userDAO.AddUser(student);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle(null);
+                    alert.setHeaderText("学生添加成功!");
+                    alert.showAndWait();
+                    loadData();
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(null);
+                alert.setHeaderText(null);
+                alert.setContentText("请输入正确的ID!");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -82,6 +97,7 @@ public class Admin_stuinfoController {
         StudentDAO studentDAO = new StudentDAOimpl();
         selectedcourseDAO selectedcourseDAO = new selectedcourseDAOimpl();
         UserDAO userDAO = new UserDAOimpl();
+        try{
         if(studentDAO.DeleteStudent(Integer.parseInt(inputid.getText()))==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -101,6 +117,13 @@ public class Admin_stuinfoController {
             alert.setContentText("成功删除学生信息!");
             alert.showAndWait();
             loadData();
+        }
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的ID!");
+            alert.showAndWait();
         }
     }
 

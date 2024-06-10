@@ -52,7 +52,15 @@ public class Admin_teainfoController {
 
         TeacherDAO teacherDAO = new TeacherDAOimpl();
         UserDAO userDAO = new UserDAOimpl();
-
+        if(inputid.getText().isBlank()||inputname.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("请输入完整信息!");
+            alert.showAndWait();
+            return;
+        }else{
+        try{
         teacher.setId(Integer.parseInt(inputid.getText()));
         teacher.setUsername(inputname.getText());
         teacher.setPassword(inputid.getText());
@@ -73,6 +81,14 @@ public class Admin_teainfoController {
             alert.showAndWait();
             loadData();
         }
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("请输入正确的ID!");
+            alert.showAndWait();
+        }
+        }
     }
 
     public void del(ActionEvent event) throws SQLException {
@@ -83,6 +99,7 @@ public class Admin_teainfoController {
         TeacherDAO teacherDAO = new TeacherDAOimpl();
         CourseDAO courseDAO = new CourseDAOimpl();
         UserDAO userDAO = new UserDAOimpl();
+        try{
         if(teacherDAO.DeleteTeacher(Integer.parseInt(inputid.getText()))==0){
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("错误");
@@ -103,6 +120,12 @@ public class Admin_teainfoController {
             alert.showAndWait();
             loadData();
             return;
+        }
+        }catch (NumberFormatException e){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("错误");
+            alert.setContentText("请输入正确的ID!");
+            alert.showAndWait();
         }
     }
 
